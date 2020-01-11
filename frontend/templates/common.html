@@ -1,0 +1,24 @@
+<!-- Generate a string of n tabs -->
+{%- macro tab(n) -%}
+{% for _ in range(1, n) %}	{% endfor %}
+{%- endmacro %}
+
+<!-- 
+	input(field) | indent(n) | safe is buggy in Jinja 2.10.
+	It causes the html to be escaped. Downgrading to 2.9.x would solve
+	the issue, but Flask requires 2.10.
+    So, for now, the tab() macro is used to get the indentation level
+	right.
+-->
+
+<!-- Draw standard input form element with error fields -->
+{%- macro input(field, indent) -%}
+				 <div class="form-field">
+{{ tab(indent) }}	{{ field.label }}{{ field }}
+{{ tab(indent) }}	<ul>
+					{%- for error in field.errors %}
+{{ tab(indent) }}		<li> {{ error }}
+					{%- endfor %}
+{{ tab(indent) }}	</ul>
+{{ tab(indent) }}</div>
+{%- endmacro %}

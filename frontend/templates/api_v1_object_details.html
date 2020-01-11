@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="page">
+	<h1> {{ g.title }}</h1>
+	<p>
+		<a href="{{ url_for('main.render_homepage') }}">Home</a>
+	</p>
+	<p>
+		{{ g.obj.object_type_handle }}/{{ g.obj.value }}
+	</p>
+
+</div>
+
+{% endblock %}
