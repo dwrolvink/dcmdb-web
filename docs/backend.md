@@ -1,12 +1,3 @@
-# Introduction
-DCMDB is a simple tool to create objects and the relationships between them.
-The main sellingpoint of dcmdb is that you can create any kind of object
-and object-object relationship straight from the application.
-
-Juggling dynamic relationships with performance is really hard (for me at least),
-so don't expect good performance from this system when you have a massive amount
-of objects.
-
 # Installation / Setup
 Sqlite3 has to be installed for the backend to work. This is a python3 project.
 
