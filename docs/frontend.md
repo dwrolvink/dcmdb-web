@@ -11,21 +11,17 @@ pip install pipenv
 
 # Get the code
 cd <myProjectsFolder>
-git clone git@gitlab.com:dwrolvink1/flask-base-project.git
+git clone git@github.com:dwrolvink/dcmdb-web.git
 
 # Initiate virtual environment and download pip modules in the process
-cd flask-base-project
+cd dcmdb-web
 pipenv install
 
-# Enter the virtual environment, and start the app
-pipenv shell
-export FLASK_APP='application'
-export FLASK_ENV='development' # default is production
-flask run
+# Start the app
+pipenv run python run.py
 
-# Exit app and exit virtual env
+# Exit app
 # -  Ctrl+C
-exit
 ```
 
 After having ran this app once, you can start it up more quickly by 
@@ -49,10 +45,10 @@ pip install flask
 
 # Get the code
 cd <myProjectsFolder>
-git clone git@gitlab.com:dwrolvink1/flask-base-project.git
+git clone git@github.com:dwrolvink/dcmdb-web.git
 
 # Start the app
-cd flask-base-project
+cd dcmdb-web
 $env:flask_app = 'application'
 $env:flask_env = 'development' # default is production
 flask run
@@ -60,7 +56,7 @@ flask run
 After having ran this app once, you can start it up more quickly by 
 doing:
 ```powershell
-cd <myProjectsFolder>/flask-base-project
+cd <myProjectsFolder>/dcmdb-web
 python run.py   # development
 python serve.py # production
 ```
