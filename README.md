@@ -19,3 +19,19 @@ The backend requires sqlite3 to be installed. The frontend has more complex
 requirements which can be installed using pipenv (among others). See the frontend 
 readme for more information.
 
+# Installation
+```bash
+# first install python3, pip, sqlite3
+# then:
+pip install pipenv
+
+# Get code
+git clone git@github.com:dwrolvink/dcmdb-web.git
+
+# Install frontend requirements
+cd dcmdb-web
+pipenv install
+
+# Start the application (development mode)
+pipenv run python run.py
+```
