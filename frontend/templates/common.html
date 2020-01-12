@@ -14,7 +14,7 @@
 <!-- Draw standard input form element with error fields -->
 {%- macro input(field, indent) -%}
 				 <div class="form-field">
-{{ tab(indent) }}	{{ field.label }}{{ field }}
+{{ tab(indent) }}	<div class="form-label">{{ field.label }}</div>{{ field }}
 {{ tab(indent) }}	<ul>
 					{%- for error in field.errors %}
 {{ tab(indent) }}		<li> {{ error }}

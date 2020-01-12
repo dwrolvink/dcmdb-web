@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 {% from 'common.html' import api_nav %}
+{% from 'common.html' import input as input %}
+
+{% block extra_css %}
+		<!-- login.html css -->
+		<link rel="stylesheet" href="/static/dist/css/forms.css" />
+{% endblock %}
 
 {% block content %}
 
@@ -8,7 +14,7 @@
 	{{ api_nav(g) }}
 
 
-	<h1> {{ g.title }}</h1>
+	<h1> <a href="/ui/api/v1/object/{{ g.obj.url }}">{{ g.title }}</a></h1>
 	<p>
 		{{ g.obj.url }}
 	</p>
@@ -27,6 +33,25 @@
 			</tr>
 		{% endfor %}
 	</table>
+
+	{% if g.form == 'form1' %}
+	<form method="POST" action="?load_form=form2" >
+	<h4> Add object as property</h4>
+	{{ input(form.object_type_handle,5) }}		
+	{{ form.submit1 }}
+	{{ form.csrf_token }}
+	</form>	
+	{% endif %}
+
+	{% if g.form == 'form2' %}
+	<form method="POST" action="?load_form=form2" >
+	<h4> Add object as property</h4>
+	{{ input(form.object_type_handle(readonly=true),5) }}
+	{{ input(form.object_instance_handle,5) }}	
+	{{ form.submit2 }}
+	{{ form.csrf_token }}
+	</form>	
+	{% endif %}	
 
 </article>
 

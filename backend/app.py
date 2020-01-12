@@ -101,6 +101,7 @@ class App():
     def csl_to_list(self, csl):
         l = csl.split(", ")
         return list(filter(None, l))
+      
 
     def print_object_tree(self, object_url, level=0):
         obj = self.get(object_url)

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% from 'common.html' import input as input %}
 
 {% block content %}
 
@@ -17,14 +18,18 @@
 					</td>
 				</tr>
 			{% endfor %}
+		</table>
 	</p>
 
+	<form method="POST" >
+	<h4> Create new Object Type</h4>
+	{{ input(form.object_type_handle,5) }}
+	{{ input(form.object_type_name,5) }}
+	{{ input(form.object_type_description,5) }}
+	{{ form.submit }}
+	{{ form.csrf_token }}
+	</form>	
+
 </article>
-
-{% endblock %}
-
-{% block inpage_menu %}
-
-<li> <a href="/">Back</a>
 
 {% endblock %}
