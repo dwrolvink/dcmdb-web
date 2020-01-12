@@ -36,6 +36,19 @@ class ObjectTypeManager():
 
         return row_id
 
+    def get_all(self):
+        query = "SELECT * FROM object_types;"
+        fetch_result = self.app.db.fetch_all(query)
+
+        # objects not found
+        if fetch_result is None:
+            return False
+
+        # Convert to ObjectType
+        ot_list = []
+        for row in fetch_result:
+            ot_list.append(ObjectType(app=self.app, row=row))
+        return ot_list
     
     def get_id(self, type_handle):
         """returns False if no object is found, otherwise str(int)"""
@@ -63,7 +76,7 @@ class ObjectTypeManager():
         obj = ObjectType(app=self.app, row=fetch_result)
         return obj
 
-    def get_object(self, handle):
+    def get_object_by_handle(self, handle):
         obj_id = self.get_id(handle)
         return self.get_object_by_id(obj_id)
         
@@ -114,6 +127,9 @@ class ObjectType():
         self.description = row[3]
         self.value_limit = row[4]
         self.url = self.handle
+
+        if self.name == "":
+            self.name = self.handle.capitalize()
 
     def __repr__(self):    
         return ("\n<class ObjectType> \n" \

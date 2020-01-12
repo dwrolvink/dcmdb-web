@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% from 'common.html' import api_nav %}
+{% from 'common.html' import input as input %}
+
+{% block content %}
+
+<article>
+	{{ api_nav(g) }}
+
+	<h1> {{ g.title }}</h1>
+
+	<table class="tablelist">
+		{% for obj in g.objects %}
+			<tr>
+				<td>
+					{{ obj.object_type_handle}}/{{obj.handle}}
+				</td>
+				<td>
+					<a href="/ui/api/v1/object/{{ obj.url }}"> {{ obj.value }} </a>
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+
+	<form method="POST" novalidate="novalidate">
+	{{ input(form.object_handle,5) }}
+	{{ input(form.object_value,5) }}
+	{{ form.submit }}
+	{{ form.csrf_token }}
+	</form>
+
+
+
+</article>
+
+{% endblock %}
+
+{% block inpage_menu %}
+
+<li> <a href="/">Back</a>
+
+{% endblock %}

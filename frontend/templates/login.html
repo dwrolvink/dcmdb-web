@@ -8,7 +8,7 @@
 {% from 'common.html' import input as input %}
 
 {% block content %}
-		<div class="page">
+		<article>
 			<h1> {{ g.title }}</h1>
 			<form method="POST" novalidate="novalidate">
 				{{ input(form.username,5) }}
@@ -16,5 +16,5 @@
 				{{ form.submit }}
 				{{ form.csrf_token }}
 			</form>
-		</div>
+		</article>
 {% endblock %}

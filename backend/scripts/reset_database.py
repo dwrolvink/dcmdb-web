@@ -16,7 +16,7 @@ def run(app):
 
     # objects
     query3 = ("CREATE TABLE objects " 
-            "(id integer primary key autoincrement, type int, value text, " \
-            "properties text, members text);")
+            "(id integer primary key autoincrement, type int, " \
+            "handle text UNIQUE, value text, properties text, members text);")
     
     app.db.run((query1, query2, query3))

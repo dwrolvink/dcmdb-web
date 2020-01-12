@@ -9,6 +9,7 @@ class Command():
         self.ot_name = ""
         self.ot_description = ""
         self.ot_value_limit = ""
+        self.oi_handle = ""
         self.oi_value = ""
         self.oi_object_type = ""
         self.oi_property_handles = ""
@@ -22,8 +23,10 @@ class Command():
                                         self.ot_value_limit)
         elif self.action == "new_object_instance":
             # Create object instance
-            obj_id = self.app.create_object(self.oi_object_type, self.oi_value)
-            obj_url = self.oi_object_type + "/" + self.oi_value
+            obj_id = self.app.create_object(self.oi_object_type, 
+                                            self.oi_handle,
+                                            self.oi_value)
+            obj_url = self.oi_object_type + "/" + self.oi_handle
 
             # Link properties
             if self.oi_property_handles != "":
@@ -50,7 +53,7 @@ class Processor():
                 command.action = "new_object_instance"
                 args = line.split("/")
                 command.oi_object_type = args[0]
-                command.oi_value = args[1]
+                command.oi_handle = args[1]
             # + department
             else:
                 command.action = "new_object_type"
@@ -65,6 +68,8 @@ class Processor():
 
             if attribute == 'name':
                 command.ot_name = value
+            if attribute == 'value':
+                command.oi_value = value
             elif attribute == 'description':
                 command.ot_description = value
             elif attribute == 'value_limit':

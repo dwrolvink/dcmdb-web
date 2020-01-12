@@ -18,20 +18,27 @@ class App():
         self.object_type = ObjectTypeManager(app=self)
 
     # ObjectInstance
-    def create_object(self, type, value):
-        return self.object_instance.new(type, value)
+    def create_object(self, type, handle, value):
+        return self.object_instance.new(type, handle, value)
 
-    def get_object_id(self, object_type, value):
-        return self.object_instance.get_id(object_type, value)     
+    def get_object_id(self, object_type, handle):
+        return self.object_instance.get_id(object_type, handle)     
 
     def get_object_by_url(self, url):
         return self.object_instance.get_object_by_url(url)  
 
-    def get_object_by_id(self, obj_id):
+    # int -> ObjectInstance | False
+    def get_object_instance_by_id(self, obj_id):
         return self.object_instance.get_object_by_id(obj_id)      
 
-    def get_object_instance(self, object_type, value):
-        return self.object_instance.get_object(object_type, value)           
+    def get_object_instance(self, object_type, handle):
+        return self.object_instance.get_object(object_type, handle)     
+
+    def get_all_objects_of_type(self, object_type):
+        obj_list = self.object_instance.get_all_of_type(object_type)
+        obj_list.sort(key = lambda x: x.value)
+        return obj_list           
+
 
     # ObjectType
     def create_object_type(self, handle, name="", description="", value_limit=""):
@@ -40,8 +47,19 @@ class App():
     def get_object_type_id(self, type_handle):
         return self.object_type.get_id(type_handle)      
 
+    def get_object_type_by_id(self, object_type_id):
+        return self.object_type.get_object_by_id(object_type_id)
+
+    def get_object_type_by_handle(self, object_type_handle):
+        return self.object_type.get_object_by_handle(object_type_handle)
+
     def get_object_type_handle(self, object_type_id):
-        return self.object_type.get_handle(object_type_id)                   
+        return self.object_type.get_handle(object_type_id)      
+
+    def get_all_object_types(self):
+        ot_list = self.object_type.get_all()  
+        ot_list.sort(key = lambda x: x.name)
+        return ot_list           
 
     def convert_to_object_type_id(self, object_type):
         return self.object_type.convert_to_object_type_id(object_type)

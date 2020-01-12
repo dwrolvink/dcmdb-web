@@ -19,7 +19,31 @@
 	</head>
 
 	<body>
+		<header>
+			<a href="/"><img src="/static/dist/img/logo.png" alt="dcmdb" /></a>
+			<nav id="nav-mobile">
+					<div style="clear:both"></div>
+				<button id="menu-button" onclick="toggleDisplay('nav-web');">
+						☰ Menu
+				</button><br/>
+				<div style="clear:both"></div>
+			</nav>			
+			<nav id="nav-web">
+				<ul>
+					<li><a href="/">Home</a>
+					<li><a href="/ui/api/v1/object">API</a>
+					<li><a href="/login">Login</a>
+				</ul>
+				<div style="clear:both"></div>
+			</nav>
+		</header>
+		<div style="clear:both"></div>
+		<div id="feature-image" class="midpage" style="background-image:url(/static/dist/img/drops.jpg)"></div>
+
+	
+
 		{% block content %}{%endblock %}
+
 	</body>
 	
 </html>

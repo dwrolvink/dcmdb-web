@@ -19,3 +19,19 @@ class LoginForm(FlaskForm):
 								]
 							)
 	submit = SubmitField('Submit')
+
+class CreateObjectForm(FlaskForm):
+	object_handle = StringField(
+							'object_handle', 
+							validators=[
+								InputRequired(), 
+								Length(min=1, max=200)
+								]
+							)
+	object_value = StringField(
+							'object_value', 
+							validators=[
+								Length(min=0, max=200)
+								]
+							)
+	submit = SubmitField('Submit')

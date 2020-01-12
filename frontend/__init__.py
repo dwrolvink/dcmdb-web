@@ -42,6 +42,10 @@ def create_app():
 	from .main import main as main_blueprint
 	app.register_blueprint(main_blueprint)
 
+	# Register api_v1, this is the blueprint that handles the /api/v1/ routes
+	from .api_v1 import api as api_v1_blueprint
+	app.register_blueprint(api_v1_blueprint)    
+
 	# -- Return app to Flask to start serving files
 	return app
 

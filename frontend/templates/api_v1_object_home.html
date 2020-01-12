@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<article>
+	<h1> {{ g.title }}</h1>
+
+	<p>
+		<table class="tablelist">
+			{% for obj in g.objects %}
+				<tr>
+					<td>
+						 {{ obj.handle}}
+					</td>
+					<td>
+						<a href="/ui/api/v1/object/{{ obj.handle }}">{{obj.name}}</a>
+					</td>
+				</tr>
+			{% endfor %}
+	</p>
+
+</article>
+
+{% endblock %}
+
+{% block inpage_menu %}
+
+<li> <a href="/">Back</a>
+
+{% endblock %}

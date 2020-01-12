@@ -22,3 +22,15 @@
 {{ tab(indent) }}	</ul>
 {{ tab(indent) }}</div>
 {%- endmacro %}
+
+{%- macro back_link() -%}
+<a onclick="window.history.back();" style="cursor:pointer"><< Back</a>
+{%- endmacro %}
+
+{%- macro api_nav(g) -%}
+	<div id="nav-body">
+		<table><tr><td width="200px">{{ back_link() }}</td>
+		<td><a href="{{ g.parent_page }}">{{ g.parent_page_link_name }}</a></td>
+		</tr></table>
+	</div>
+{%- endmacro %}

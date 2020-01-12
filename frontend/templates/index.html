@@ -1,15 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<div class="page">
+<article>
 	<h1> {{ g.title }}</h1>
 	<p>
 		The date is {{ g.date }}.
 	<p>
-		<a href="api/v1/object/computer/1">api/v1/object/computer/1</a>
+		<a href="/ui/api/v1/object">Go to API</a>
 	</p>
-
-</div>
-
+</article>
 {% endblock %}
