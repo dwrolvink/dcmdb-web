@@ -64,9 +64,20 @@ python serve.py # production
 ## Production setup
 First, install uwsgi and  uwsgi-plugin-python.
 
+If you didn't do it yet in the previous steps, install pipenv:
+
 ```bash
-# install 
 cd <myProject>
-python serve.py
+pipenv install
 ```
+
+Then, open dcmdb-web/serve.py, and change the value for venv_location.
+Instructions on how to get that value can be found as comments above this
+value.
+
+```bash
+cd <myProject>
+pipenv run python serve.py
+```
+
 See serve.py for more information about the production setup
