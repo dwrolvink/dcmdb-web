@@ -35,3 +35,4 @@ pipenv install
 # Start the application (development mode)
 pipenv run python run.py
 ```
+For more in-depth information, see [Frontend](docs/frontend.md).
