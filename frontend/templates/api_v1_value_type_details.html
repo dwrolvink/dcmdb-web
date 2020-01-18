@@ -10,34 +10,31 @@
 {% block content %}
 
 <article>
+	
 	{{ api_nav(g) }}
 
-	<h1> {{ g.title }}</h1>
 
+	<h1> <a href="/ui/api/v1/object/{{ g.type_obj.url }}">{{ g.title }}</a></h1>
+
+
+	
 	<table class="tablelist">
+		{% if g.objects %}
+		<tr><td colspan="2"><h2>Set values</h2></td></tr>
 		{% for obj in g.objects %}
 			<tr>
 				<td>
-					{{ obj.type_handle}}/{{obj.handle}}
+					<a href="/ui/api/v1/object/{{ obj[0].url }}">
+					{{ obj[0].type_name}}/{{ obj[0].value }} 
+					</a>
 				</td>
 				<td>
-					<a href="/ui/api/v1/object/{{ obj.url }}"> {{ obj.value }} </a>
+					{{ ", ".join(obj[1]) }}
 				</td>
 			</tr>
-		{% endfor %}
-	</table>
-
-	
-	<form method="POST" >
-	<h4> Create new {{ g.object_type_name }}</h4>
-	{{ input(form.object_handle,5,True) }}
-	{{ input(form.object_value,5) }}
-	{{ form.submit }}
-	{{ form.csrf_token }}
-	<div style="clear:both"></div>
-	</form>
-
-
+		{% endfor %}	
+	    {% endif %}	
+	</table>	
 
 </article>
 
@@ -45,6 +42,6 @@
 
 {% block inpage_menu %}
 
-<li> <a href="/">Back</a>
+<li> <a href="{{ g.back_link }}">Back</a>
 
 {% endblock %}

@@ -10,13 +10,20 @@ def run(app):
     
 
     # object_types
-    query2 = ("CREATE TABLE object_types " 
+    query2 = ("CREATE TABLE types " 
             "(id integer primary key autoincrement, handle text UNIQUE, name text, " \
-            "description text, value_limit text); \n")
+            "description text, value_limit text, data_type text, unit text); \n")
 
     # objects
     query3 = ("CREATE TABLE objects " 
             "(id integer primary key autoincrement, type int, " \
-            "handle text UNIQUE, value text, properties text, members text);")
+            "handle text UNIQUE, value text);")
+
+    # relationships
+    query4 = ("CREATE TABLE relationships " 
+            "(id integer primary key autoincrement, object_id integer, parent_id integer);")  
     
-    app.db.run((query1, query2, query3))
+    # User-defined values
+    query5 = ("CREATE TABLE udvs " 
+            "(id integer primary key autoincrement, object_id integer, udv text);")      
+    app.db.run((query1, query2, query3, query4, query5))

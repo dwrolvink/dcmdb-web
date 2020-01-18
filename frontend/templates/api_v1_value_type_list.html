@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% from 'common.html' import input as input %}
+
+{% block content %}
+
+<article>
+	<h1> {{ g.title }}</h1>
+
+	<p>
+		<ul>
+			{% for obj in g.objects %}
+				<li> <a href="/ui/api/v1/value_type/{{ obj.handle }}">
+						 {{ obj.handle}}
+					</a>
+			{% endfor %}
+		</ul>
+	</p>
+
+	<form method="POST" >
+	<h4> Create new Simple Type</h4>
+	{{ input(form.type_handle,5,True) }}
+	{{ input(form.type_unit,5) }}
+	{{ input(form.type_name,5) }}
+	{{ input(form.type_description,5) }}
+	{{ form.submit }}
+	{{ form.csrf_token }}
+	</form>		
+
+</article>
+
+
+
+{% endblock %}
+
+

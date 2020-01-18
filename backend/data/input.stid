@@ -1,13 +1,17 @@
 # TYPES
 # ---------------------------------------------------------------------
-+ computer
-+ a_code
++ [object] computer
++ [object] a_code
 	name: Application Code
 	description: Code van het project/product in COMAR
-+ department
-+ dep_location
++ [object] department
++ [object] dep_location
 	name: Department Location
 	description: Geographical location of a Department.
++ [value] ram
+	unit: gb
++ [value] cpu
+
 
 # OBJECTS
 # ---------------------------------------------------------------------
@@ -24,3 +28,5 @@
 + computer/srv-001
 	a_code/A00001
 	department/hr
+	cpu: 2
+	ram: 4

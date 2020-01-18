@@ -7,11 +7,14 @@
 
 	<p>
 		<ul>
-			{% for obj in g.objects %}
-				<li> <a href="/api/v1/object/{{ obj.object_type_handle }}/{{ obj.id }}">
-						 {{ obj.handle}}/{{obj.name}}
-					</a>
-			{% endfor %}
+			<li> 
+				<a href="/ui/api/v1/object">
+						Object types
+				</a>
+			<li> 
+				<a href="/ui/api/v1/value_type">
+						Value types
+				</a>				
 		</ul>
 	</p>
 

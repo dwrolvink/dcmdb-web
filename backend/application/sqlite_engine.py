@@ -27,11 +27,12 @@ class DatabaseEngine():
             os.remove(self.url)        
 
     # use for create, update, delete
+    # returns boolean denoting success of operation
     def run(self, query):
 
         try:
             self.connect()
-            self.print.debug("Connected to database")
+            #self.print.debug("Connected to database")
 
             if type(query)==str:
                 self.cursor.execute(query)
@@ -48,13 +49,13 @@ class DatabaseEngine():
             return False
 
         except sqlite3.Error as error:
-            self.print.error(error)
+            self.print.error(str(error))
             return False
 
         finally:
             if (self.connection):
                 self.close_connection()
-                self.print.debug("The Sqlite connection is closed")
+                #self.print.debug("The Sqlite connection is closed")
 
         return True
 
@@ -70,7 +71,7 @@ class DatabaseEngine():
         return result  
 
     # use when you expect more than one row
-    def fetch_all(self, query):
+    def fetch_all(self, query):      
         self.connect()
         qr = self.cursor.execute(query)
         result = self.cursor.fetchall()

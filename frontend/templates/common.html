@@ -12,15 +12,17 @@
 -->
 
 <!-- Draw standard input form element with error fields -->
-{%- macro input(field, indent) -%}
-				 <div class="form-field">
-{{ tab(indent) }}	<div class="form-label">{{ field.label }}</div>{{ field }}
-{{ tab(indent) }}	<ul>
-					{%- for error in field.errors %}
-{{ tab(indent) }}		<li> {{ error }}
-					{%- endfor %}
-{{ tab(indent) }}	</ul>
-{{ tab(indent) }}</div>
+{%- macro input(field, indent, required='') -%}
+	<div class="form-label {% if required %}required{% endif %}">
+		{{ field.label }}
+	</div>{{ field }}
+	{% if field.errors %}
+	<ul>
+	{%- for error in field.errors %}
+		<li> {{ error }}
+	{%- endfor %}
+	</ul>
+	{% endif %}
 {%- endmacro %}
 
 {%- macro back_link() -%}

@@ -13,6 +13,11 @@ app.process_input("backend/data/input.stid")
 #app.print_object_tree("computer/srv-001")
 #print(repr(app.get("dep_location")))
 
-ots = app.get_all_object_types()
+""" ots = app.get_all_types()
 for ot in ots:
     print(repr(ot))
+
+ """
+
+obj = app.get_object_by_url('computer/srv-001')
+print(obj.members)

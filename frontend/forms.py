@@ -25,11 +25,11 @@ class CreateObjectForm(FlaskForm):
                             'Handle', 
                             validators=[
                                 InputRequired(), 
-                                Length(min=5, max=200)
+                                Length(min=1, max=200)
                                 ]
                             )
     object_value = StringField(
-                            'Name (Leave empty if same as handle)', 
+                            'Name/Value (Leave empty if same as handle)', 
                             validators=[
                                 Length(min=0, max=200)
                                 ]
@@ -37,41 +37,33 @@ class CreateObjectForm(FlaskForm):
     submit = SubmitField('Submit')
 
 class CreateObjectTypeForm(FlaskForm):
-    object_type_handle = StringField(
-                            'Handle', 
-                            validators=[
-                                InputRequired(), 
-                                Length(min=5, max=200)
-                                ]
-                            )
-    object_type_name = StringField(
-                            'Name (Leave empty if same as handle)', 
-                            validators=[
-                                Length(min=0, max=200)
-                                ]
-                            )
-    object_type_description = StringField(
-                            'Description'
-                            )                            
+    type_handle      = StringField('Handle', 
+                        validators=[InputRequired(), Length(min=1, max=200)])
+    type_name        = StringField('Name (Leave empty if same as handle)', 
+                         validators=[Length(min=0, max=200)])                      
+    type_description = StringField('Description')                  
     submit = SubmitField('Submit')
 
-class AddPropertyForm1(FlaskForm):
-    object_type_handle= SelectField(
-                            'Object', validators=[Optional()]
-                            )                                         
-    submit1 = SubmitField('Submit')    
+class CreateValueTypeForm(FlaskForm):
+    type_handle      = StringField('Handle', 
+                        validators=[InputRequired(), Length(min=1, max=200)])
+    type_name        = StringField('Name (Leave empty if same as handle)', 
+                         validators=[Length(min=0, max=200)])                      
+    type_description = StringField('Description')
+    type_unit        = StringField('Unit (will be displayed as suffix)')                  
+    submit = SubmitField('Submit')
 
-class AddPropertyForm2(FlaskForm):
-    object_type_handle = StringField(
-                            'Object type',
-                            validators=[
-                                InputRequired()
-                                ]
-                            )
-    object_instance_handle= SelectField(
-                            'Object',
-                            validators=[
-                                InputRequired()
-                                ]                            
-                            )
-    submit2 = SubmitField('Submit')      
+
+class AddPropertyForm_choose_type(FlaskForm):
+    type_handle   = SelectField('Object', validators=[Optional()])                                         
+    submit1       = SubmitField('Submit')    
+
+class AddPropertyForm_choose_object(FlaskForm):
+    type_handle   = StringField('Object type',validators=[InputRequired()])                      
+    object_handle = SelectField('Object', validators=[InputRequired()])
+    submit2       = SubmitField('Submit')      
+
+class AddPropertyForm_choose_value(FlaskForm):
+    type_handle  = StringField('Object type', validators=[InputRequired()])
+    value        = StringField('Value', validators=[InputRequired()])
+    submit3      = SubmitField('Submit') 
