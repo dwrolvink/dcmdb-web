@@ -21,6 +21,7 @@
 # ---------------------------------------------------------------------
 + a_code/A00001	
 + dep_location/amsterdam
+	value: Amsterdam
 
 + dtap/development
 	value: Development
@@ -45,6 +46,6 @@
 + computer/srv-002
 	a_code/A00001
 	department/hr
-	development/production
+	dtap/production
 	cpu: 4
 	ram: 8	

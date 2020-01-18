@@ -9,6 +9,8 @@ class Printer():
         self.end_prefix  = "+ "
         self.prefix = ""
 
+        self.error_list = []
+
     # Printing is done with two concepts: steps, and verbosity.
     # Desired verbosity level can be set in the app config.
     # Errors are always level 1, step messages are level 2, and the rest
@@ -33,12 +35,14 @@ class Printer():
         message += "\n" # add newline to separate step blocks
         if failure:
             self.prefix = self.fail_prefix
+            self.error_list.append(message)
         self.step_index -= 1
         self.print(message, verbosity)
         
     def error(self, message):
         verbosity = 1 # errors are always level 1
         message = "ERROR: " + message 
+        self.error_list.append(message)
         self.print(message, verbosity)
 
     def tip(self, message):
@@ -49,6 +53,11 @@ class Printer():
     def debug(self, message):
         verbosity = 3
         self.print(message, verbosity)
+
+    def dump_errors(self):
+        for e in self.error_list:
+            self.print(e)
+        self.error_list = []
         
     def print(self, message, verbosity=3):
         if self.app.config["verbosity"] == 0:

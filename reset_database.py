@@ -27,3 +27,8 @@ app.print.end_step("Done.")
 # ----------------------------------------------
 app.process_input("backend/data/input.stid")
 
+# ERROR SUMMARY
+# ----------------------------------------------
+app.print.debug("Completed with errors (if any):" \
+                 "\n-------------------------------")
+app.print.dump_errors()

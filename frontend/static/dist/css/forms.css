@@ -1,0 +1,16 @@
+.form-field {
+	padding-bottom:1rem;
+}
+.form-field label {
+	display: block;
+	padding-bottom:0.2rem;
+}
+.form-field li {
+	list-style: none;
+	color: rgb(255, 0, 85);
+	padding-left: 0px;
+	font-size: small;
+}
+.form-field ul {
+	margin: 0px; padding: 0px;
+}
