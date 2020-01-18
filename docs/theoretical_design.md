@@ -36,5 +36,7 @@ A good example here is "Cost monthly". This is a basic value that we would want 
 
 Any object has two built-in values: a "value" (the name) and a "handle". Cost monthly would then be an extra value: a user defined value, or **UDV**. 
 
-An object can have any kind of UDV's, even multiple of the same kind. *(Though that would be a bit weird in this case, imagine a UDV called incidental_cost).* Since a UDV is just a value, it can't have any properties. A UDV can only have one member, though the UDV-type will list any object that has a UDV with its type as a member. So for a UDV type of "telephone_number", if you go to that type, you'll find all objects that have a phone number associated with them.
+An object can have any kind of UDV's, even multiple of the same kind. *(That would be a bit weird in this case, but imagine a UDV called incidental_cost).* Since a UDV is just a value, it can't have any properties. 
+
+A UDV can only have one member, though the UDV-type will list any object that has a UDV with its type as a member. So for a UDV type of "telephone_number", if you go to that type, you'll find all objects that have a phone number associated with them.
 
