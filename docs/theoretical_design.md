@@ -23,10 +23,9 @@ A car insurance is a different case. You can have the insurance type be global, 
 to a car, and one car only. *(At least in the case of private insurances)*. In our lingo, a car insurance is thus a **linked-object**,
 it can only have one member: a certain car. It can have any number of properties though. 
 
-Cost monthly is a basic value. We don't want to create a new object for every cost listed. Each object has values a name and 
-handle value. Cost monthly would be a user defined value, or **UDV**. An object can have any kind of UDV's, even multiple of 
-the same kind. (Though that would be a bit weird in this case, imagine a UDV called incidental_cost.) Since a UDV is a value,
-it can't have any properties. A UDV can only have one member, though the UDV-type will list any object that has a UDV with its
-type as a member. So for a UDV type of "telephone_number", if you go to that type, you'll find all objects that 
-have a phone number associated with them.
+Cost monthly is a basic value. We don't want to create a new object for every cost listed, as this would muddy up our database pretty quickly.
+
+Any object has two built-in values: a "value" (the name) and a "handle". Cost monthly would then be an extra value: a user defined value, or **UDV**. 
+
+An object can have any kind of UDV's, even multiple of the same kind. *(Though that would be a bit weird in this case, imagine a UDV called incidental_cost).* Since a UDV is just a value, it can't have any properties. A UDV can only have one member, though the UDV-type will list any object that has a UDV with its type as a member. So for a UDV type of "telephone_number", if you go to that type, you'll find all objects that have a phone number associated with them.
 
