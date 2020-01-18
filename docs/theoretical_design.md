@@ -15,7 +15,7 @@ There are three types at the time of writing: free objects, linked-objects, and 
 # Different types of objects
 Let's take the example of the following ideas: a car, it's insurance, and monthly costs associated with the insurance.
 
-A car is a **free object**. It can be made a member of a group of cars, it can be added to a department, a location, etc. 
+A car is a **free object**. It can be made a member of a group of cars, it can be added to a department, a location, etc. (It can even be made a member of a computer, or coffee machine - even though that wouldn't make sense).
 In this case, the department would be the **property** of the car. The car is then at the same time a **member** of the 
 department.
 
