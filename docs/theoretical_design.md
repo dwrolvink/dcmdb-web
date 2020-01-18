@@ -26,8 +26,13 @@ A computer can have any member too. In this case it's hard to imagine a good cas
 A car insurance is a different case. Any car insurance will always apply to a car, and one car only. *(At least in the case of private insurances)*. In our lingo, a car insurance is thus a **linked-object**,
 it can only have one member: a certain car. It can have any number of properties though. 
 
+Linked objects allow us to not have to create a new car_insurance type for every car_insurance object that we want to create.
+This would muddy up our database pretty quickly, and it would be an annoying extra step.
+
 ## UDVs
-Cost monthly is a basic value. We don't want to create a new object for every cost listed, as this would muddy up our database pretty quickly.
+Imagine a linked-object, but having no reason to add any properties. Also, imagine that you don't want to create a new object every time you want to set a new value somewhere. 
+
+A good example here is "Cost monthly". This is a basic value that we would want to add all over the place. Creating a new object every time we set a value like this is a lot of work, and useless because we are not interested in setting properties to a basic value like this.
 
 Any object has two built-in values: a "value" (the name) and a "handle". Cost monthly would then be an extra value: a user defined value, or **UDV**. 
 
