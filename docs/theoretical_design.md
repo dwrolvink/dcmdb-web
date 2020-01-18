@@ -15,14 +15,17 @@ There are three types at the time of writing: free objects, linked-objects, and 
 # Different types of objects
 Let's take the example of the following ideas: a car, it's insurance, and monthly costs associated with the insurance.
 
+## Free objects
 A car is a **free object**. It can be made a member of a group of cars, it can be added to a department, a location, etc. *(It can even be made a member of a computer, or coffee machine - even though that wouldn't make sense)*.
 In this case, the department would be a **property** of the car. The car is then at the same time a **member** of the 
 department.
 
+## Linked-objects
 A car insurance is a different case. You can have the insurance type be global, but any actual car insurance will allways apply
 to a car, and one car only. *(At least in the case of private insurances)*. In our lingo, a car insurance is thus a **linked-object**,
 it can only have one member: a certain car. It can have any number of properties though. 
 
+## UDVs
 Cost monthly is a basic value. We don't want to create a new object for every cost listed, as this would muddy up our database pretty quickly.
 
 Any object has two built-in values: a "value" (the name) and a "handle". Cost monthly would then be an extra value: a user defined value, or **UDV**. 
