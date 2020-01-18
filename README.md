@@ -21,12 +21,12 @@ readme for more information.
 
 # Installation
 ```bash
-# first install python3, pip, sqlite3
+# first install python3, pip
 # then:
 pip install pipenv
 
 # Get code
-git clone git@github.com:dwrolvink/dcmdb-web.git
+git clone https://github.com/dwrolvink/dcmdb-web.git
 
 # Install frontend requirements
 cd dcmdb-web
