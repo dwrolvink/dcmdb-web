@@ -8,6 +8,8 @@
 + [object] dep_location
 	name: Department Location
 	description: Geographical location of a Department.
++ [object] dtap
+	name: Development Phase
 + [value] ram
 	unit: gb
 + [value] cpu
@@ -20,6 +22,15 @@
 + a_code/A00001	
 + dep_location/amsterdam
 
++ dtap/development
+	value: Development
++ dtap/test
+	value: Test
++ dtap/acceptance
+	value: Acceptance		
++ dtap/production
+	value: Production
+
 # Sub level
 # ---------------------------------------------------------------------
 + department/hr
@@ -28,5 +39,12 @@
 + computer/srv-001
 	a_code/A00001
 	department/hr
+	dtap/development
 	cpu: 2
 	ram: 4
++ computer/srv-002
+	a_code/A00001
+	department/hr
+	development/production
+	cpu: 4
+	ram: 8	
