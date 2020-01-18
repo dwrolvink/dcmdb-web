@@ -32,7 +32,16 @@ git clone git@github.com:dwrolvink/dcmdb-web.git
 cd dcmdb-web
 pipenv install
 
+# Reset the database (optional, when running the first time)
+python reset_database.py
+
 # Start the application (development mode)
 pipenv run python run.py
 ```
+
+# Resetting the database
+When you are playing around with this system, it's nice to roll back now and then.
+In dcmdb-web/backend/data, you'll find an input file. If you edit this file to add types/objects, those will be created in a fresh database when you call reset_database.py
+
+# About the frontend
 For more in-depth information, see [Frontend](docs/frontend.md).
