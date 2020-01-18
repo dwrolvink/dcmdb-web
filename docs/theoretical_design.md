@@ -1,8 +1,18 @@
-# Different types of objects
-To create a new object, we first need to create an **object type**, or named **types** in short.
+# Introduction
+To create a new object, we first need to create an **object type**, or named **types** in short. If we want to create a computer and list the department it belongs to, we'd do this:
+
+- create type "computer"
+- create type "department"
+- create object "server1" of type "computer"
+- create object "HR" of type "department"
+- set "department/hr" as a property of "computer/server1"  
+
+A note on the nomenclature here: a parent object is called the property of the child object. A child object is called the 
+member of the parent object. (This will make more sense later on).
 
 There are three types at the time of writing: free objects, linked-objects, and UserDefinedValues.
 
+# Different types of objects
 Let's take the example of the following ideas: a car, it's insurance, and monthly costs associated with the insurance.
 
 A car is a **free object**. It can be made a member of a group of cars, it can be added to a department, a location, etc. 
