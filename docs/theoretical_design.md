@@ -32,6 +32,8 @@ it can only have one member: a certain car. It can have any number of properties
 Linked objects allow us to not have to create a new car_insurance type for every car_insurance object that we want to create.
 This would muddy up our database pretty quickly, and it would be an annoying extra step.
 
+> Linked objects cannot be found through the general object listing. They can be accessed through their respective type, or by going to the objects they're linked to. (They will be displayed like any other property).
+
 ## UDVs
 Imagine a linked-object, but having no reason to add any properties. Also, imagine that you don't want to create a new object every time you want to set a new value somewhere. 
 
@@ -41,7 +43,7 @@ Any object has two built-in values: a "value" (the name) and a "handle". Cost mo
 
 An object can have any kind of UDV's, even multiple of the same kind. *(That would be a bit weird in this case, but imagine a UDV called incidental_cost).* 
 
-Being just values, UDVs are not directly browsable in the API browser. They can only be found through the UDV-type, and through the objects that they are set on. Since a UDV is just a value, it can't have any properties. 
+> Being just values, UDVs are not directly browsable in the API browser. They can only be found through the UDV-type, and through the objects that they are set on. Since a UDV is just a value, it can't have any properties. 
 
-A UDV can only have one member, the object it is set on. Though, the UDV-type will list any object that has a UDV with its type as a member. So for a UDV type of "telephone_number", if you go to that type, you'll find all objects that have a phone number associated with them.
+> A UDV can only have one member, the object it is set on. Though, the UDV-type will list any object that has a UDV with its type as a member. So for a UDV type of "telephone_number", if you go to that type, you'll find all objects that have a phone number associated with them.
 
