@@ -1,4 +1,7 @@
-# Introduction
+# Theoretical design
+> To understand all the variable names, and the architecture of the backend app, it's good to know the theory behind the design. 
+That's what this page is all about.
+
 To create a new object, we first need to create an **object type**, or named **types** in short. If we want to create a computer and list the department it belongs to, we'd do this:
 
 - create type "computer"
