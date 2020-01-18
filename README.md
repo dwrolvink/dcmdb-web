@@ -21,18 +21,30 @@ readme for more information.
 
 # Installation
 ```bash
-# first install python3, pip, sqlite3
+# first install python3, pip
 # then:
 pip install pipenv
 
 # Get code
-git clone git@github.com:dwrolvink/dcmdb-web.git
+git clone https://github.com/dwrolvink/dcmdb-web.git
 
 # Install frontend requirements
 cd dcmdb-web
 pipenv install
 
+# Reset the database (optional, when running the first time)
+python reset_database.py
+
+# Copy config.py to config_local.py and edit the values
+cp config.py config_local.py
+
 # Start the application (development mode)
 pipenv run python run.py
 ```
+
+# Resetting the database
+When you are playing around with this system, it's nice to roll back now and then.
+In dcmdb-web/backend/data, you'll find an input file. If you edit this file to add types/objects, those will be created in a fresh database when you call reset_database.py
+
+# About the frontend
 For more in-depth information, see [Frontend](docs/frontend.md).
