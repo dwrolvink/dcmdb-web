@@ -35,6 +35,9 @@ pipenv install
 # Reset the database (optional, when running the first time)
 python reset_database.py
 
+# Copy config.py to config_local.py and edit the values
+cp config.py config_local.py
+
 # Start the application (development mode)
 pipenv run python run.py
 ```
