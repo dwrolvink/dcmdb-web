@@ -11,6 +11,9 @@ Juggling dynamic relationships with performance is really hard (for me at least)
 so don't expect good performance from this system when you have a massive amount
 of objects.
 
+To understand the code, you'll need to understand the theory behind it. 
+Read more on that in the [Theoretical Design](docs/theoretical_design.md).
+
 # Architecture
 The frontend is a Flask application that serves the website to interact with
 the backend, which is a plain Python application.
