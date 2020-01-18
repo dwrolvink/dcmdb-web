@@ -20,6 +20,8 @@ A car is a **free object**. It can be made a member of a group of cars, it can b
 In this case, the department would be a **property** of the car. The car is then at the same time a **member** of the 
 department.
 
+A computer can have any member too. In this case it's hard to imagine a good case, but any case where you'd at a computer as a property: in that case that object will show up as a member of that computer.
+
 ## Linked-objects
 A car insurance is a different case. You can have the insurance type be global, but any actual car insurance will allways apply
 to a car, and one car only. *(At least in the case of private insurances)*. In our lingo, a car insurance is thus a **linked-object**,
