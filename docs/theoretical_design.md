@@ -32,7 +32,7 @@ it can only have one member: a certain car. It can have any number of properties
 Linked objects allow us to not have to create a new car_insurance type for every car_insurance object that we want to create.
 This would muddy up our database pretty quickly, and it would be an annoying extra step.
 
-> Linked objects cannot be found through the general object listing. They can be accessed through their respective type, or by going to the objects they're linked to. (They will be displayed like any other property).
+> Linked objects cannot be found through the general object listing (in the UI). They can be accessed through their respective type, or by going to the objects they're linked to. (They will be displayed like any other property). They can be directly accessed through the API like any other object (e.g. /api/v1/objects/object_type/object_handle).
 
 ## UDVs
 Imagine a linked-object, but having no reason to add any properties. Also, imagine that you don't want to create a new object every time you want to set a new value somewhere. 
