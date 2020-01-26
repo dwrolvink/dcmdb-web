@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% from 'common.html' import api_nav %}
+{% from 'common.html' import input as input %}
+
+{% block extra_css %}
+		<!-- login.html css -->
+		<link rel="stylesheet" href="/static/dist/css/forms.css" />
+{% endblock %}
+
+{% block content %}
+
+<article>
+	{{ api_nav(g) }}
+
+	<h1> {{ g.rc.name }}</h1>
+
+	<table class="tablelist">
+
+		{% if g.applies_to %}
+			<tr><td colspan="2"><h2>Objects of this type can be applied to:</h1></td></tr>
+			{% for obj in g.applies_to %}
+				<tr>
+					<td>
+						{{ obj.handle}}/{{obj.name}}
+					</td>
+					<td>
+						<a href="/ui/api/v1/{{ obj.url }}"> {{ obj.name }} </a>
+					</td>
+				</tr>
+			{% endfor %}
+		{% endif %}		
+
+		{% if g.accepts %}
+			<tr><td colspan="2"><h2>Objects of this class accept:</h1></td></tr>
+			{% for obj in g.accepts %}
+				<tr>
+					<td>
+						{{ obj.handle}}/{{obj.name}}
+					</td>
+					<td>
+						<a href="/ui/api/v1/{{ obj.url }}"> {{ obj.name }} </a>
+					</td>
+				</tr>
+			{% endfor %}
+		{% endif %}				
+
+		<tr><td colspan="2"><h2>All records of class {{ g.rc.name }}</h1></td></tr>
+		{% if g.rc.type in ['object', 'linked-object'] %}
+		{% for obj in g.records %}
+			<tr>
+				<td colspan="2">
+					<a href="/ui/api/v1/{{ obj.url }}"> {{ obj.label }} </a>
+				</td>
+			</tr>
+		{% endfor %}
+		{% else %}
+		{% for obj in g.records %}
+			{% set child = obj.get_members()[0] %}
+			<tr>
+				<td>
+					<a href="/ui/api/v1/{{ child.url }}"> {{ child.label }} </a>
+				</td>
+				<td>
+					 <span style="color:gray">{{ obj.value_prefix }}</span> {{ obj.value }} <span style="color:gray">{{ obj.record_class.unit }}</span>
+				</td>
+			</tr>
+		{% endfor %}		
+		{% endif %}
+		
+
+	</table>
+
+	
+	<form method="POST" >
+	<h4> Create new {{ g.rc.name }}</h4>
+	{{ input(form.record_handle,5,True) }}
+	{{ input(form.record_value,5) }}
+	{{ form.submit }}
+	{{ form.csrf_token }}
+	<div style="clear:both"></div>
+	</form>
+
+
+
+</article>
+
+{% endblock %}
+
+{% block inpage_menu %}
+
+<li> <a href="/">Back</a>
+
+{% endblock %}

@@ -1,0 +1,6 @@
++ [object] car
+
++ [linked-object] car_insurance
+	linked_to: car
+	name: Car Insurance
+	applies_to: car	

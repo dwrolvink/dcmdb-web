@@ -44,13 +44,13 @@ class DatabaseEngine():
             self.cursor.close()
 
         except sqlite3.IntegrityError as error:
-            self.print.error("Failed to execute query: " + str(error))
+            self.app.fail("Failed to execute query: " + str(error))
             self.print.tip("Does the object already exist?")
             return False
 
         except sqlite3.Error as error:
-            self.print.error(str(error))
-            return False
+            self.app.fail(str(error))
+            self.print.debug(query)
 
         finally:
             if (self.connection):
@@ -62,6 +62,7 @@ class DatabaseEngine():
         
 
     # use when you expect one row from the database
+    # returns row
     def fetch_one(self, query):
         self.connect()
         qr = self.cursor.execute(query)
@@ -71,6 +72,7 @@ class DatabaseEngine():
         return result  
 
     # use when you expect more than one row
+    # returns list of rows
     def fetch_all(self, query):      
         self.connect()
         qr = self.cursor.execute(query)

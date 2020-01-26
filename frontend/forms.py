@@ -20,50 +20,40 @@ class LoginForm(FlaskForm):
                             )
     submit = SubmitField('Submit')
 
-class CreateObjectForm(FlaskForm):
-    object_handle = StringField(
-                            'Handle', 
-                            validators=[
-                                InputRequired(), 
-                                Length(min=1, max=200)
-                                ]
-                            )
-    object_value = StringField(
-                            'Name/Value (Leave empty if same as handle)', 
-                            validators=[
-                                Length(min=0, max=200)
-                                ]
-                            )
+class CreateRecordForm(FlaskForm):
+    record_handle = StringField('Handle', validators=[InputRequired(), Length(min=1, max=200)])
+    record_value = StringField( 'Name/Value (Leave empty if same as handle)', 
+                                validators=[Length(min=0, max=200)])
     submit = SubmitField('Submit')
 
-class CreateObjectTypeForm(FlaskForm):
-    type_handle      = StringField('Handle', 
+class CreateRecordClassForm(FlaskForm):
+    class_handle      = StringField('Handle', 
                         validators=[InputRequired(), Length(min=1, max=200)])
-    type_name        = StringField('Name (Leave empty if same as handle)', 
+    class_name        = StringField('Name (Leave empty if same as handle)', 
                          validators=[Length(min=0, max=200)])                      
-    type_description = StringField('Description')                  
+    class_description = StringField('Description')                  
     submit = SubmitField('Submit')
 
 class CreateValueTypeForm(FlaskForm):
-    type_handle      = StringField('Handle', 
+    class_handle      = StringField('Handle', 
                         validators=[InputRequired(), Length(min=1, max=200)])
-    type_name        = StringField('Name (Leave empty if same as handle)', 
+    class_name        = StringField('Name (Leave empty if same as handle)', 
                          validators=[Length(min=0, max=200)])                      
-    type_description = StringField('Description')
-    type_unit        = StringField('Unit (will be displayed as suffix)')                  
+    class_description = StringField('Description')
+    class_unit        = StringField('Unit (will be displayed as suffix)')                  
     submit = SubmitField('Submit')
 
 
-class AddPropertyForm_choose_type(FlaskForm):
-    type_handle   = SelectField('Object', validators=[Optional()])                                         
+class AddPropertyForm_choose_class(FlaskForm):
+    class_handle   = SelectField('Object', validators=[Optional()])                                         
     submit1       = SubmitField('Submit')    
 
-class AddPropertyForm_choose_object(FlaskForm):
-    type_handle   = StringField('Object type',validators=[InputRequired()])                      
-    object_handle = SelectField('Object', validators=[InputRequired()])
+class AddPropertyForm_choose_record(FlaskForm):
+    class_handle   = StringField('Class',validators=[InputRequired()])                      
+    record_handle = SelectField('Record', validators=[InputRequired()])
     submit2       = SubmitField('Submit')      
 
 class AddPropertyForm_choose_value(FlaskForm):
-    type_handle  = StringField('Object type', validators=[InputRequired()])
+    class_handle  = StringField('Class', validators=[InputRequired()])
     value        = StringField('Value', validators=[InputRequired()])
     submit3      = SubmitField('Submit') 

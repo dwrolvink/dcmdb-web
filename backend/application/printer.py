@@ -23,21 +23,39 @@ class Printer():
     #
     # Using self.print() directly will be level 3 by default.
 
-    def begin_step(self, message):
+    def begin_step(self, message, bar=False):
         verbosity = 2 # step messages are always level 2
-        self.prefix = self.begin_prefix
+        
+        if bar == False:
+            self.prefix = self.begin_prefix
+
         self.print(message, verbosity)
+
+        if bar:
+            self.print( "-" * (len(message)) )
+
         self.step_index += 1
 
-    def end_step(self, message, failure=False):
+    def end_step(self, message, failure=False, blockend=False, bar=False):
         verbosity = 2 # step messages are always level 2
-        self.prefix = self.end_prefix
-        message += "\n" # add newline to separate step blocks
+        self.step_index -= 1
+
+        if bar:
+            self.print( "-" * (len(message)) )
+        else:
+            self.prefix = self.end_prefix
+        
         if failure:
             self.prefix = self.fail_prefix
             self.error_list.append(message)
-        self.step_index -= 1
+        
         self.print(message, verbosity)
+
+        if blockend:
+            self.blockspacer(verbosity)
+
+    def blockspacer(self, verbosity):
+        self.print("", verbosity)
         
     def error(self, message):
         verbosity = 1 # errors are always level 1

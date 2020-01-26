@@ -1,0 +1,8 @@
++ [value] cost_monthly
+	name: Maandelijkse Kosten
+	unit: euro
+	applies_to: *
+
++ [value] cost_yearly
+	name: Jaarlijkse Kosten
+	unit: euro

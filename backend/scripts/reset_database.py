@@ -10,14 +10,17 @@ def run(app):
     
 
     # object_types
-    query2 = ("CREATE TABLE types " 
+    query2 = ("CREATE TABLE classes " 
             "(id integer primary key autoincrement, handle text UNIQUE, name text, " \
-            "description text, value_limit text, data_type text, unit text); \n")
+            "type text, description text, appended integer, unit text, value_prefix, "\
+            "value_limit text, applies_to text, accepts text);")
+   
 
     # objects
-    query3 = ("CREATE TABLE objects " 
-            "(id integer primary key autoincrement, type int, " \
-            "handle text UNIQUE, value text);")
+    query3 = ("CREATE TABLE records " 
+            "(id integer primary key autoincrement, class_id int, " \
+            "handle text, label text, value text, target_id int, " \
+            "alias_src_id int, alias_dst_id int);")
 
     # relationships
     query4 = ("CREATE TABLE relationships " 

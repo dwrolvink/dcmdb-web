@@ -1,0 +1,41 @@
++ [value] email
+
++ [object] company
+
++ [object] department
+
++ [object] team
+	accepts: role
+
++ [alias] po
+	name: Product Owner
+	accepts: employee
+	
++ [object] employee
+	name: Employee
+	accepts: team, role, email, tel
+
++ [alias] owner
+	name: Owner
+#	member_name: Owner of
+	accepts: role, employee, team, po
+
++ [value] tel
+	name: Telephone Number
+	applies_to: employee, department
+
++ [value] private_tel
+	name: Private Phone Number
+	applies_to: person
+
++ [object] a_code
+	name: Application Code
+	description: Code van het project/product in COMAR
+
+
++ [object] dep_location
+	name: Department Location
+	description: Geographical location of a Department.
+
++ [object] dtap
+	name: Development Phase	

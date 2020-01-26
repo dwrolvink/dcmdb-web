@@ -1,0 +1,8 @@
++ [object] computer
++ [value] ram
+	name: RAM
+	unit: gb
+	applies_to: computer
++ [value] cpu
+	name: CPU
+	unit: cores

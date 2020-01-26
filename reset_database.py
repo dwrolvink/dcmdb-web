@@ -29,6 +29,14 @@ app.process_input("backend/data/input.stid")
 
 # ERROR SUMMARY
 # ----------------------------------------------
-app.print.debug("Completed with errors (if any):" \
-                 "\n-------------------------------")
-app.print.dump_errors()
+if len(app.print.error_list):
+    app.print.debug("Completed with errors:" \
+                    "\n-------------------------------")
+    app.print.dump_errors()
+
+# rec = app.get_record(20)
+# rec.print()
+
+# print(rec.properties())
+
+

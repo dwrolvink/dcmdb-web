@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% from 'common.html' import api_nav %}
+{% from 'common.html' import input as input %}
+
+{% block extra_css %}
+		<!-- login.html css -->
+		<link rel="stylesheet" href="/static/dist/css/forms.css" />
+{% endblock %}
+
+{% block content %}
+
+<article>
+	
+	{{ api_nav(g) }}
+
+
+	<h1> {{ g.record.class_name }}:  <a href="/ui/api/v1/{{ g.record.url }}">{{ g.title }}</a></h1>
+
+	<div>
+		{% if g.form == 'choose_class' %}
+		<form method="POST" class="flat">
+		<h4> Add property</h4>
+		{{ input(form.class_handle,5,True) }}		
+		{{ form.submit1 }}
+		{{ form.csrf_token }}
+		<div style="clear:both"></div>
+		</form>	
+		{% endif %}
+
+		{% if g.form == 'choose_record' %}
+		<form method="POST" class="flat">
+		<h4> Add property: choose object</h4>
+		{{ input(form.record_handle,5,True) }}	
+		{{ input(form.class_handle(readonly=true),5) }}
+		{{ form.submit2 }}
+		{{ form.csrf_token }}
+		<div style="clear:both"></div>
+		</form>	
+		{% endif %}	
+
+		{% if g.form == 'choose_value' %}
+		<form method="POST" class="flat">
+		<h4> Add property: choose value</h4>
+		{{ input(form.class_handle(readonly=true),5) }}
+		{{ input(form.value,5,True) }}	
+		{{ form.submit3 }}
+		{{ form.csrf_token }}
+		<div style="clear:both"></div>
+		</form>	
+		{% endif %}	
+	</div>
+	
+
+<table>
+
+
+	<table class="tablelist">
+		{% if g.record.custom_attributes %}
+			<tr><td colspan="3"><h2>Properties</h2></td></tr>
+			
+			{% for group in g.record.custom_attributes %}
+				{% set rc = group[1][0].record_class %}
+
+				<tr>
+					<td valign="top" rowspan="{{ group[1]|length + 1 }}">
+						<a style="color:black;" href="/ui/api/v1/{{ rc.url }}">
+							{{ rc.name }}
+						</a>
+					</td>
+				</tr>
+
+				{% for obj in group[1] %}
+					<tr>
+						{% if obj.class_type == 'value' %}
+							<td>
+								<span style="color:gray">{{ obj.value_prefix }}</span> {{ obj.value }} <span style="color:gray">{{ obj.unit }}</span> 
+							</td>	
+						{% elif obj.class_type == 'alias' %}
+							<td colspan="2">
+								<a href="/ui/api/v1/{{ obj.alias_src.url }}">
+									{{ obj.alias_src.label }}
+								</a>
+							</td>							
+						{% else %}
+							<td colspan="2">
+								<a href="/ui/api/v1/{{ obj.url }}">
+									{{ obj.label }}
+								</a>
+							</td>
+						{% endif %}	
+					</tr>
+				{% endfor %}
+			{% endfor %}
+		{% endif %}	
+	
+
+		{% if g.record.member_list %}
+			<tr><td colspan="3"><h2>Members</h2></td></tr>
+			
+			{% for group in g.record.member_list %}
+				{% set rc = group[1][0].record_class %}
+
+				<tr>
+					<td valign="top" rowspan="{{ group[1]|length + 1 }}">
+						{% if rc.type == 'alias' %}
+							<a style="color:black;" href="/ui/api/v1/{{ rc.url }}">
+								{{ rc.name }} of
+							</a>
+						{% else %}
+							<a style="color:black;" href="/ui/api/v1/{{ rc.url }}">
+								{{ rc.name }}
+							</a>		
+						{% endif %}					
+					</td>
+				</tr>
+
+				{% for obj in group[1] %}
+					<tr>
+						{% if obj.class_type == 'value' %}
+							<td>
+								dgdf<span style="color:gray">{{ obj.value_prefix }}</span> {{ obj.value }} <span style="color:gray">{{ obj.unit }}</span> 
+							</td>	
+						{% elif obj.class_type == 'alias' %}
+							<td colspan="2">
+								<a href="/ui/api/v1/{{ obj.alias_dst.url }}">
+									{{ obj.alias_dst.label }}
+								</a>
+							</td>								
+						{% else %}
+							<td colspan="2">
+								<a href="/ui/api/v1/{{ obj.url }}">
+									{{ obj.label }}
+								</a>
+							</td>
+						{% endif %}	
+					</tr>
+				{% endfor %}
+			{% endfor %}
+		{% endif %}	
+	</table>	
+
+
+
+</article>
+
+{% endblock %}
+
+{% block inpage_menu %}
+
+<li> <a href="{{ g.back_link }}">Back</a>
+
+{% endblock %}
