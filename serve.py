@@ -20,6 +20,7 @@ os.chdir(script_root)
 
 # Set the name of the app that we want to start 
 os.environ['FLASK_APP'] = "frontend"
+os.environ['FLASK_RUN_HOST'] = "0.0.0.0"
 
 # venv location
 # Change the value below with your output of "pipenv --venv" when you
