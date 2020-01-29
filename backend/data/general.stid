@@ -1,2 +1,10 @@
 + [object] person
 	applies_to: employee
+
++ [object] city
+	name: City
+	description: Geographical location of resources.
++ city/denhaag
+	label: Den Haag
++ city/rotterdam
+	label: Rotterdam		

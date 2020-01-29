@@ -8,7 +8,7 @@
 
 + [object] employee
 	name: Employee
-	accepts: team, email, tel, person
+	accepts: team, email, tel, person, city
 	
 
 + [object] s_code
@@ -18,13 +18,7 @@
 + s_code/A00002
 + s_code/A00003
 
-+ [object] dep_location
-	name: Department Location
-	description: Geographical location of a Department.
-+ dep_location/denhaag
-	label: Den Haag
-+ dep_location/rotterdam
-	label: Rotterdam	
+
 
 + [object] dtap
 	name: Development Phase	
@@ -54,3 +48,7 @@
 + [alias] owner
 	name: Owner
 	accepts: role, employee, team, po
+
++ [alias] dep_location
+	name: Department Location
+	accepts: city

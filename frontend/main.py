@@ -77,9 +77,7 @@ def show_input(file_name=""):
             elif ":" in line:
                 parts = line.split(":")
                 output += parts[0]
-                output += ':<span style="color:red">'+parts[1]+"</span>" 
-            elif "/" in line:
-                output += '<span style="color:purple">'+line+"</span>"                                           
+                output += ':<span style="color:red">'+parts[1]+"</span>"                                          
             else:
                 output += line 
     output += "</pre>"
