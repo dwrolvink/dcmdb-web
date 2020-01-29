@@ -8,6 +8,9 @@ verify_ssl = true
 [packages]
 flask = "*"
 flask-wtf = "*"
+gunicorn = "*"
+uwsgi = "*"
+uwsgi-plugin-python = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.6"

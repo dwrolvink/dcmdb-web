@@ -25,15 +25,14 @@ os.environ['FLASK_RUN_HOST'] = "0.0.0.0"
 # venv location
 # Change the value below with your output of "pipenv --venv" when you
 # are in <project_folder>/dcmdb-web
-venv_location = "/home/dorus/.local/share/virtualenvs/dcmdb-web-cZyRviUT"
+venv_location = "/home/user/.local/share/virtualenvs/dcmdb-web-N2BcnVZ8"
 
 # flask run
 # Change the last value in the list with your output of "pipenv --venv" when you
 # are in <project_folder>/dcmdb-web
 subprocess.run(
-				["uwsgi", "-s", "/tmp/flask-base-project.sock",
+				["uwsgi", "-s", "/home/user/www/dcmdb-web/uwsgi-dcmdb.sock",
 				"--manage-script-name", "--mount", "/=wsgi:app",
-				"--http-socket", ":5000", "--plugin", "python",
+				"--http-socket", ":8000",
                 "-H", venv_location
 				])
-

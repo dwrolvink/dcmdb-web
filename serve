@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Run this script as user to start serving this site over uwsgi.
+# Be sure to have installed uwsgi, and configured nginx properly.
+nohup pipenv run python serve.py &
+
+sleep 5s
+chown :www-data uwsgi-dcmdb.sock
+
