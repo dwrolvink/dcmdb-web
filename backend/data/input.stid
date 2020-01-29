@@ -77,7 +77,6 @@
 
 + team/server_administrators/po
 	-> employee/D.W.Rolvink@ditzo.com
-	label: Product Owner - Server administration
 
 + computer/srv-001
 	a_code/A00001

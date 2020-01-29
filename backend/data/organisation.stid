@@ -5,7 +5,6 @@
 + [object] department
 
 + [object] team
-	accepts: role
 
 + [alias] po
 	name: Product Owner
@@ -13,7 +12,7 @@
 	
 + [object] employee
 	name: Employee
-	accepts: team, role, email, tel
+	accepts: team, email, tel
 
 + [alias] owner
 	name: Owner

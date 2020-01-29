@@ -9,10 +9,16 @@
 
 {% block content %}
 
-<article>
+<article style="border:0px; max-width:100vw;">
 	{{ api_nav(g) }}
+</article>
+<article style="border:0px;">
 
 	<h1> {{ g.rc.name }}</h1>
+</article>
+
+<article>
+	
 
 	<table class="tablelist">
 
@@ -34,12 +40,13 @@
 			<tr><td colspan="2"><h2>Objects of this class accept:</h1></td></tr>
 			{% for obj in g.accepts %}
 				<tr>
-					<td>
+					<td class="bullet">
 						{{ obj.handle}}/{{obj.name}}
 					</td>
 					<td>
 						<a href="/ui/api/v1/{{ obj.url }}"> {{ obj.name }} </a>
 					</td>
+					<td></td>
 				</tr>
 			{% endfor %}
 		{% endif %}				
@@ -48,16 +55,17 @@
 		{% if g.rc.type in ['object', 'linked-object'] %}
 		{% for obj in g.records %}
 			<tr>
-				<td colspan="2">
+				<td class="bullet">
 					<a href="/ui/api/v1/{{ obj.url }}"> {{ obj.label }} </a>
 				</td>
+				<td></td>
 			</tr>
 		{% endfor %}
 		{% else %}
 		{% for obj in g.records %}
 			{% set child = obj.get_members()[0] %}
 			<tr>
-				<td>
+				<td class="bullet">
 					<a href="/ui/api/v1/{{ child.url }}"> {{ child.label }} </a>
 				</td>
 				<td>
@@ -70,15 +78,16 @@
 
 	</table>
 
-	
-	<form method="POST" >
-	<h4> Create new {{ g.rc.name }}</h4>
-	{{ input(form.record_handle,5,True) }}
-	{{ input(form.record_value,5) }}
-	{{ form.submit }}
-	{{ form.csrf_token }}
-	<div style="clear:both"></div>
-	</form>
+	<div class="dark">
+		<form method="POST"  >
+		<h4> Create new {{ g.rc.name }}</h4>
+		{{ input(form.record_handle,5,True) }}
+		{{ input(form.record_value,5) }}
+		{{ form.submit }}
+		{{ form.csrf_token }}
+		<div style="clear:both"></div>
+		</form>
+	</div>
 
 
 

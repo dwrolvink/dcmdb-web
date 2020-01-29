@@ -1,0 +1,39 @@
+form {
+	background-color: rgb(241, 247, 255);
+	padding: 0.5rem;
+	padding-left: 1rem;
+	padding-bottom:0.5rem;
+	margin-top:1rem;
+}
+
+.form-label {
+	color: rgb(20, 23, 26);
+	padding-right:10px;
+}
+form input, form select {
+	margin-right:10px;
+}
+
+input {
+	margin-bottom: 1rem;
+}
+input[type=submit] {
+	display:block;
+}
+
+
+
+.flat .form-label,
+.flat input,
+.flat select {
+	float: left;
+}
+.flat input[type=submit] {
+	float:left;
+	margin-top:0rem;
+	margin-bottom:1rem;	
+}
+
+select {
+	margin-bottom:1rem;
+}

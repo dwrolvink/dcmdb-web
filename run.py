@@ -25,6 +25,7 @@ os.environ['FLASK_APP'] = "frontend"
 # Setting FLASK_ENV=development enables the debugger, which should never, 
 # ever be done in production!
 os.environ['FLASK_ENV'] = "development"
+os.environ['FLASK_RUN_HOST'] = "0.0.0.0"
 
 # flask run
 subprocess.run(["flask", "run"])

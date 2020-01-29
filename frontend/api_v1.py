@@ -146,7 +146,7 @@ def render_class_details(class_handle):
     # Get all "accepts"
     accepts = []
     for t in rc.accepts:
-        accepts.append(get_record_class(class_handle))
+        accepts.append(get_record_class(t))
     index.g.accepts = accepts
     
     # Create new record form
