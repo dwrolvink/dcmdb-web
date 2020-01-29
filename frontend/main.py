@@ -42,3 +42,45 @@ def render_login_page():
         index.g.title = form.username.data
 
     return index.render_template('login.html', form=form)
+
+@main.route('/reset_database')
+def reset_database():
+    index.scripts["reset_database"].run(index.backend)
+    index.backend.process_input("backend/data/input.stid")
+    return render_homepage()
+
+
+@main.route('/show_input')
+@main.route('/show_input/<file_name>')
+def show_input(file_name=""):
+    if file_name == "":
+        file_name = "input"
+
+    input_file = "backend/data/{}.stid".format(file_name)
+
+    output = "<pre>"
+    
+    with open(input_file) as f:
+        for line in f:
+            line = line.replace("\t","  ")
+
+            if len(line) == 0:
+                output += line
+            elif line[0] == "#":
+                output += '<span style="color:green">'+line+"</span>"
+            elif line[0] == ">":
+                url = line.replace("> ", "").replace(".stid", "").strip()
+                output += '<a href="show_input/{}">'.format(url)
+                output += '<span style="color:red">'+line+"</span></a>"                    
+            elif line[0] == "+":
+                output += '<span style="font-weight:bold">'+line+"</span>"   
+            elif ":" in line:
+                parts = line.split(":")
+                output += parts[0]
+                output += ':<span style="color:red">'+parts[1]+"</span>" 
+            elif "/" in line:
+                output += '<span style="color:purple">'+line+"</span>"                                           
+            else:
+                output += line 
+    output += "</pre>"
+    return output

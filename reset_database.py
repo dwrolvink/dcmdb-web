@@ -34,9 +34,5 @@ if len(app.print.error_list):
                     "\n-------------------------------")
     app.print.dump_errors()
 
-# rec = app.get_record(20)
-# rec.print()
-
-# print(rec.properties())
 
 

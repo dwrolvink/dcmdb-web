@@ -2,6 +2,7 @@
 import sys
 sys.path.append("../flask-example-app")
 from backend.app import App as Backend
+import backend.scripts.reset_database 
 
 # Flask general
 from flask import Blueprint, render_template, g, current_app
@@ -21,5 +22,8 @@ class Integrator():
         self.current_app = current_app
         self.title = title
         self.datetime = datetime
+
+        self.scripts = {}
+        self.scripts["reset_database"] = backend.scripts.reset_database
 
 

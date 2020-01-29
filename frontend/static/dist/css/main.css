@@ -92,6 +92,14 @@ article img {
 	display:block;
 }
 
+.red-button {
+	background-color: rgb(255, 0, 64);
+	color:rgb(255, 233, 233);
+	border:0px;
+	padding:0.5rem;
+	border-radius: 0.2rem;
+}
+
 p {
 	font-size: 1.05rem;
 	margin-bottom: 1rem;

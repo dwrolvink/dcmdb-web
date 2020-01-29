@@ -6,19 +6,38 @@
 
 + [object] team
 
-+ [alias] po
-	name: Product Owner
-	accepts: employee
-	
 + [object] employee
 	name: Employee
-	accepts: team, email, tel
+	accepts: team, email, tel, person
+	
 
-+ [alias] owner
-	name: Owner
-#	member_name: Owner of
-	accepts: role, employee, team, po
++ [object] s_code
+	name: Application Code
+	description: Code as defined for the project/product in COMAR
++ s_code/A00001	
++ s_code/A00002
++ s_code/A00003
 
++ [object] dep_location
+	name: Department Location
+	description: Geographical location of a Department.
++ dep_location/denhaag
+	label: Den Haag
++ dep_location/rotterdam
+	label: Rotterdam	
+
++ [object] dtap
+	name: Development Phase	
++ dtap/development
+	label: Development
++ dtap/test
+	label: Test
++ dtap/acceptance
+	label: Acceptance		
++ dtap/production
+	label: Production	
+
+# Values --------------------------------------------------------------
 + [value] tel
 	name: Telephone Number
 	applies_to: employee, department
@@ -27,14 +46,11 @@
 	name: Private Phone Number
 	applies_to: person
 
-+ [object] a_code
-	name: Application Code
-	description: Code van het project/product in COMAR
+# Aliases --------------------------------------------------------------
++ [alias] po
+	name: Product Owner
+	accepts: employee	
 
-
-+ [object] dep_location
-	name: Department Location
-	description: Geographical location of a Department.
-
-+ [object] dtap
-	name: Development Phase	
++ [alias] owner
+	name: Owner
+	accepts: role, employee, team, po

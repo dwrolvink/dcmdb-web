@@ -4,89 +4,62 @@
 > car.stid
 > finances.stid
 
-# # e.g.:
-# # alias_src = employee/emp1, 
-# # alias_dst = computer/srv1, 
-# # alias_rc_handle = owner
+# Company
++ company/rolvink_it
+	label: Rolvink-IT
 
-# + alias_dst/alias_rc_handle
-# 	-> alias_src
+# Departments
++ department/it
+	company/rolvink_it
+	dep_location/rotterdam
+	label: IT Department
 
+# Teams
++ team/server_administrators
+	department/it
+	label: Server Administrators	
 
-
-# OBJECTS
-# ---------------------------------------------------------------------
-# Top level
-# ---------------------------------------------------------------------
-+ a_code/A00001	
-
-+ dep_location/amsterdam
-	label: Amsterdam
-
-+ dtap/development
-	label: Development
-+ dtap/test
-	label: Test
-+ dtap/acceptance
-	label: Acceptance		
-+ dtap/production
-	label: Production
-
-+ person/Peter Personson
-	private_tel: 123-priv-345
-
-
-# Sub level
-# ---------------------------------------------------------------------
-+ employee/p.peterson
-	person/Peter Personson
-	email: p.peterson@dcmdb.nl
-	tel: 123-bus-666
-
-+ department/hr
-	dep_location/amsterdam
-	label: Human Resources
-
-
-
+# Car stuff
 + car/gg-708-r
 
 + car/gg-708-r/car_insurance
 	label: Car Insurance
 	cost_monthly: 88
 
-+ person/Dorus Rolvink
+# Natural Persons
++ person/Persimmon_Personson
+	private_tel: 123-priv-345
 
++ person/Dorus Rolvink	
 
-# Company Ditzo 
-# ------------------------
-+ company/ditzo
-	label: Ditzo
-
-+ department/web_services_ditzo
-	label: Web Services
-	company/ditzo
-
-+ team/server_administrators
-	department/web_services_ditzo
-	label: Server Administrators
-
-+ employee/D.W.Rolvink@ditzo.com
-	person/Dorus Rolvink
+# Employees
++ employee/p_personson
+	person/Persimmon_Personson
 	team/server_administrators
+	email: p.peterson@dcmdb.nl
+	tel: 123-bus-666
 
++ employee/D.W.Rolvink
+	person/Dorus Rolvink
+	team/server_administrators	
+	car/gg-708-r
+	email: d.w.rolvink@rolvink-it.com
+
+# Roles
 + team/server_administrators/po
-	-> employee/D.W.Rolvink@ditzo.com
+	-> employee/D.W.Rolvink
 
+# Computers
 + computer/srv-001
-	a_code/A00001
-	department/hr
+	s_code/A00001
+	team/server_administrators
 	dtap/development
 	cpu: 2
 	ram: 4
+
 + computer/srv-002
-	a_code/A00001
-	department/hr
+	s_code/A00001
+	team/server_administrators
 	dtap/production
 	cpu: 4
 	cpu: 4
