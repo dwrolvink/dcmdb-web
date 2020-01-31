@@ -26,7 +26,7 @@
 			<tr><td colspan="2"><h2>Objects of this type can be applied to:</h1></td></tr>
 			{% for obj in g.applies_to %}
 				<tr>
-					<td>
+					<td class="bullet">
 						{{ obj.handle}}/{{obj.name}}
 					</td>
 					<td>
@@ -56,7 +56,15 @@
 		{% for obj in g.records %}
 			<tr>
 				<td class="bullet">
-					<a href="/ui/api/v1/{{ obj.url }}"> {{ obj.label }} </a>
+					
+					<a href="/ui/api/v1/{{ obj.url }}"> 
+						{{ obj.label }} 
+					</a>
+						{% if obj.record_class.type == 'linked-object' %}
+							for <a href="/ui/api/v1/{{ obj.target.url }}">{{ obj.target.label }}</a>
+						{% endif %}
+					
+					
 				</td>
 				<td></td>
 			</tr>
@@ -78,6 +86,7 @@
 
 	</table>
 
+	{% if g.rc.type == "object" %}
 	<div class="dark">
 		<form method="POST"  >
 		<h4> Create new {{ g.rc.name }}</h4>
@@ -88,7 +97,18 @@
 		<div style="clear:both"></div>
 		</form>
 	</div>
-
+	{% elif g.rc.type == "value" %}
+	<div class="dark">
+		<form method="POST"  >
+		<h4> Create new {{ g.rc.name }}</h4>
+		{{ input(form.record_handle,5,True) }}
+		{{ input(form.record_value,5) }}
+		{{ form.submit }}
+		{{ form.csrf_token }}
+		<div style="clear:both"></div>
+		</form>
+	</div>	
+	{% endif %}
 
 
 </article>

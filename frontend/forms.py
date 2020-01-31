@@ -46,14 +46,20 @@ class CreateValueTypeForm(FlaskForm):
 
 class AddPropertyForm_choose_class(FlaskForm):
     class_handle   = SelectField('Object', validators=[Optional()])                                         
-    submit1       = SubmitField('Submit')    
+    submit1        = SubmitField('Submit')    
 
 class AddPropertyForm_choose_record(FlaskForm):
     class_handle   = StringField('Class',validators=[InputRequired()])                      
-    record_handle = SelectField('Record', validators=[InputRequired()])
-    submit2       = SubmitField('Submit')      
+    record_handle  = SelectField('Record', validators=[InputRequired()])
+    submit2        = SubmitField('Submit')      
 
 class AddPropertyForm_choose_value(FlaskForm):
     class_handle  = StringField('Class', validators=[InputRequired()])
-    value        = StringField('Value', validators=[InputRequired()])
-    submit3      = SubmitField('Submit') 
+    value         = StringField('Value', validators=[InputRequired()])
+    submit3       = SubmitField('Submit') 
+
+class TestForm(FlaskForm):
+    sel_class_handle  = SelectField('Class', validators=[Optional()]) 
+    sel_record_handle = SelectField('Record', validators=[Optional()]) 
+    value         = StringField('Value', validators=[Optional()])
+    label         = StringField('Label', validators=[Optional()])

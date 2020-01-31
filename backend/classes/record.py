@@ -38,12 +38,15 @@ class Record():
         self.class_type = self.record_class.type
         self.class_handle = self.record_class.handle
 
-        # linked-object
+        # Properties
+        self.property_table = False
+        self.property_list = False
+        self.member_table_save = False
+        self.member_list_save = False
+        self.custom_attribute_list = False
+
         self.target_obj = False
 
-        if self.target_id:
-            self.target_obj = self.app.get_record(self.target_id)        
-       
         # alias
         self.alias_src = False
         self.alias_dst = False
@@ -56,15 +59,15 @@ class Record():
         # URL
         self.url = self.set_url()
 
-        # Properties
-        self.property_table = False
-        self.property_list = False
-        self.member_table_save = False
-        self.member_list_save = False
-        self.custom_attribute_list = False
 
     @property
     def target(self):
+        if self.target_obj:
+            return self.target_obj
+
+        if self.target_id:
+            self.target_obj = self.app.get_record(self.target_id)    
+
         return self.target_obj
 
     @property
@@ -76,16 +79,34 @@ class Record():
         self.get_property_table()
         return self.property_table
 
+    def properties(self):
+        # Get all records
+        query = "SELECT parent_id FROM relationships WHERE object_id = {}".format(self.id) 
+        return self.app.get_object_list(query, Record)   
+
+    def get_members(self):
+        query = "SELECT object_id FROM relationships WHERE parent_id = {}".format(self.id)   
+        return self.app.get_object_list(query, Record) 
+
     @property
     def list(self):
+
+        """
+        Gets all properties (from self.properties() and values like self.id
+        and returns it as a list. See get_property_table() for more information.
+        """
+
+        # Only do this work once
         if self.property_list != False:
             return self.property_list
         
+        # Compile a list of all the attributes in the self.table object
         prop_list = [   a for a in dir(self.table) 
                         if not a.startswith('__') 
                         and not callable(getattr(self.table, a))
                     ]
 
+        # Make a tupled list (property_name, value)
         prop_value_list = []
         for prop in prop_list:
             prop_value_list.append((prop, getattr(self.table, prop)))
@@ -93,20 +114,33 @@ class Record():
         self.property_list = prop_value_list
         return self.property_list
 
-
     @property
     def custom_attributes(self):
+
+        """
+        This creates a subset of self.list, leaving out the self-set variables.
+        This is mostly useful for view functions. For internal functions, consider
+        self.properties() instead.
+        """
         if self.custom_attribute_list != False:
             return self.custom_attribute_list
-
+ 
         noncustom = ['id', 'type', 'label', 'url', 'value', 
                         'target', 'alias_src', 'alias_dst']
 
         self.custom_attribute_list = [p for p in self.list 
                                         if p[0] not in noncustom]
-        return self.custom_attribute_list
+        return self.custom_attribute_list        
 
     def get_property_table(self):
+
+        """
+        Creates an Object that has all the properties of this object as
+        attributes. This consolidates child
+        relationships (like "telephone number"), with selfset properties, like
+        label and id, into one simple structure.
+        """
+
         if self.property_table != False:
             return
 
@@ -129,23 +163,10 @@ class Record():
 
         # Listed custom attributes
         for p in self.properties():
-
-            if p.record_class.type == 'object':
-                pd.set_attr(p.record_class.handle, p)
-
-            elif p.record_class.type == 'linked-object':
-                p.label = p.label + ' - ' + p.target_obj.label
-                pd.set_attr(p.record_class.handle, p)
-
-            elif p.record_class.type == 'alias':
-                p.label = p.alias_src.label
-                pd.set_attr(p.record_class.handle, p)     
-
-            elif p.record_class.type == 'value':
-                pd.set_attr(p.record_class.handle, p)                           
+            pd.set_attr(p.record_class.handle, p)                           
     
         self.property_table = pd
-
+        
 
 
     @property
@@ -164,6 +185,8 @@ class Record():
 
         self.member_list_save = member_value_list
         return self.member_list_save
+
+
 
     @property
     def member_table(self):
@@ -187,36 +210,29 @@ class Record():
 
         return self.member_table_save
 
-    def get_members(self):
-        query = "SELECT object_id FROM relationships WHERE parent_id = {}".format(self.id)   
-        return self.app.get_object_list(query, Record) 
 
-    def properties(self):
-        # Get all records
-        query = "SELECT parent_id FROM relationships WHERE object_id = {}".format(self.id) 
-        return self.app.get_object_list(query, Record)   
+
+
     
 
     def set_url(self):
-        # If rc.appended = True, url will be parent.url/self.record_class.handle/self.id
-        # (Appended records can only have one parent (=property))
-        # If not appended, url will be class/self.record_class.handle/self.id
-
+        rc = self.record_class
         url = ""
 
         # Get url for the appended case
         if self.record_class.appended == True:
             # alias
             if self.alias_dst:
-                return self.alias_dst.url + "/" + self.record_class.handle + "/" + str(self.id)
+                return self.alias_dst.url + "/" + rc.handle + "/" + str(self.id)
             # linked-object
             elif self.target:
-                return self.target.url + "/" + self.record_class.handle + "/" + str(self.id)
+                return self.target.url + "/" + rc.handle + "/" + str(self.id)
         
-        # If rc.type = object, url will be class/record_type.url/self.handle
-        # Other combinations are not allowed (type=text always has to be appended)
-        # Assume, if not appended, that type == object
-        return (self.record_class.url + "/" + self.handle)
+        # Non-appended
+        if self.handle:
+            return (self.record_class.url + "/" + self.handle)
+        
+        return (self.record_class.url + "/" + str(self.id))
 
     def add_valued_property(self, class_handle, value):
         # Create record
@@ -229,6 +245,9 @@ class Record():
         # Set udv as property
         self.add_property(rec.id)        
 
+    def add_member(self, member_id):
+        member = self.app.get_record(member_id)
+        return member.add_property(self.id)
 
     def add_property(self, record_id):
         
@@ -261,10 +280,10 @@ class Record():
         query = "INSERT INTO relationships (object_id, parent_id) "
         query += "VALUES('%s', '%s')" % (self.id, record_id)
 
-
         # Return true (=success) if query succeeded
         return self.app.db.run(query)   
         
+
     def print(self):
         msg = (
                 "\n"

@@ -67,7 +67,8 @@ class App():
             return row[0]
         return False
 
-    def get_record_id(self, class_id, record_handle):
+    def get_record_id(self, class_handle, record_handle):
+        class_id = self.get_record_class_id(class_handle)
         query = "SELECT id FROM records WHERE handle = '{}' AND class_id = {};" \
                 .format(record_handle, class_id)
 
@@ -76,10 +77,9 @@ class App():
             return row[0]  
         return False
 
-    def get_record_id_by_short_url(self, short_url):
+    def get_record_id_by_url(self, short_url):
         class_handle, record_handle = short_url.split("/")
-        rcid = self.get_record_class_id(class_handle)
-        return self.get_record_id(rcid, record_handle)        
+        return self.get_record_id(class_handle, record_handle)        
         
     def fail(self, error_message):
         """ Easy way to signal errors and quit functions. """
@@ -121,12 +121,13 @@ class App():
 
     def get(self, url):
         """
-            Possible urls:
-            - class/<class_handle>/         --> return RecordClass
-            - class/<class_handle>/objects/ --> return list of Records
-            - class/<ch>/<object_handle>/   --> return Record
-            - class/<ch>/<oh>/<appd_property_handle>/        --> return list of Records
-            - class/<ch>/<oh>/<appd_property_handle>/<ap_id> --> return Record
+            ch --> return list of records of class=ch
+                rh --> return record of class=ch, and handle=rh (rec1)
+                id --> return record with id=id (rec1)
+                    ch2 --> return list of records where parent=rec1, and class=ch2
+                        rh2 --> return record of class=ch, and handle=rh (rec1)
+            
+            rinse and repeat
         """
 
         # Pre-execution checks on url
@@ -135,67 +136,38 @@ class App():
         if url == "":
             return self.fail("URL is empty.")
 
+        # Remove class/ prefix if present
+        url = url.replace("class/","")
+
         # Split url into segment list
         segments = url.split("/")
         segments = list(filter(None, segments)) # remove empty members
 
-        # If first segment != "class", add it in front of the list
-        if segments[0] != "class":
-            segments = ['class'] + segments
+        # Test for mode
+        if len(segments) == 1:
+            mode = "get_class"
+        elif len(segments) % 2 == 0:
+            mode = "get_record"
+        elif len(segments) % 3 == 0:
+            mode = "get_children"
 
-        # Check that we have at least two values
-        # Check that we don't have more than 4 values
-        if len(segments) < 2 or len(segments) > 4:
-            return self.fail("URL '{}' is malformed".format(url))
+        if mode == "get_class":
+            rc_id = self.get_record_class_id(segments[0])
+            return RecordClass(self, rc_id)
+            
+        if mode == "get_record":
+            rec_id = self.get_record_id(segments[-2], segments[-1])
+            return self.get_record(rec_id)
 
-        # Convert url to named variables
-        # -------------------------------------------------------------
-        root_selector = segments[0]
-        class_handle = segments[1]
+        if mode == "get_children":
+            rec_id = self.get_record_id(segments[-3], segments[-2])
+            rec = self.get_record(rec_id)
 
-        if len(segments) > 2:
-            if segments[2] in ['objects']:
-                property_selector = segments[2]
-                record_handle = False
-            else:
-                record_handle = segments[2] 
-                property_selector = False
+            class_handle = segments[-1]
+            properties = rec.properties()
+            return [a for a in properties if a.record_class.handle == class_handle ]
 
-        # We're not doing the appended property parsing yet
-        if len(segments) > 3:
-            return self.fail("URL '{}' is malformed".format(url))
-               
-        # Check that root_selector == "class"
-        if root_selector != "class":
-            return self.fail("Unknown root selector '{}'.".format(root_selector))      
-        
-        # Process class/<class_handle>
-        # -------------------------------------------------------------
-        # Get class_id
-        rc_id = self.get_record_class_id(class_handle)
-        if rc_id == False:
-            return 
-        
-        # Get class
-        record_class = RecordClass(self, rc_id)
-
-        # Return RecordClass if len(segments) == 2
-        if len(segments) == 2:
-            return record_class
-
-        # Process class/<class_handle>/objects/
-        # -------------------------------------------------------------
-        if property_selector == "objects":
-            # Return list of Records of given class
-            return record_class.records()
-
-        # Process class/<class_handle>/<record_handle>/
-        # -------------------------------------------------------------
-        record_id = self.get_record_id(rc_id, record_handle)
-        if record_id == False:
-            return False
-        return Record(self, record_id)
-
+ 
         # Shouldn't end up here
         return self.fail("Unexpected fall-through")
 

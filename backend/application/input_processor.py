@@ -15,6 +15,7 @@ class Command():
 
         self.udvs = []       # [(class_handle, value)]
         self.properties = [] # [rec_url]
+        self.members = []    # [rec_url]
 
 
     def execute(self):
@@ -31,6 +32,8 @@ class Command():
     def create_record(self):
         # Create record
         rid = self.record_definition.create()
+        if rid == False:
+            return False
 
         # Get record
         record = self.app.get_record(rid)
@@ -40,7 +43,7 @@ class Command():
             self.print.begin_step("Adding {} as a property to {}".format(p, record.url))
 
             # Get property_id
-            property_id = self.app.get_record_id_by_short_url(p)
+            property_id = self.app.get_record_id_by_url(p)
             if property_id == False:
                 self.app.fail("Couldn't find {}.".format(p))
                 self.print.end_step("Adding property {} failed.".format(p), failure=True, blockend=True)
@@ -49,6 +52,24 @@ class Command():
             # Add property
             record.add_property(property_id)
             self.print.end_step("Done.", blockend=True)
+
+        # Set members
+        for m in self.members:
+            self.print.begin_step("Adding {} as a property to {}".format(m, record.url))
+
+            # Get member_id
+            member_id = self.app.get_record_id_by_url(m)
+            if member_id == False:
+                self.app.fail("Couldn't find {}.".format(m))
+                self.print.end_step("Adding property {} failed.".format(m), failure=True, blockend=True)
+                continue
+
+            # Add member
+            result = record.add_member(member_id)
+            if result == False:
+                self.print.end_step("Failed to add member.", failure=True, blockend=True)
+            else:
+                self.print.end_step("Done.", blockend=True)            
 
         # Set UDV's
         for udv in self.udvs:
@@ -158,31 +179,34 @@ class Processor():
             if len(args) < 2 or len(args) > 3:
                 return self.app.fail("URL '{}' is malformed.".format(line))
                 
-            # Define new normal record
+            # Define new record with handle
             if len(args) == 2:
                 self.command.record_type = "object"
                 self.command.record_definition.class_handle = args[0]
                 self.command.record_definition.handle = args[1]
 
+            # Define new record with id, and make it parent of the prefixed record
             if len(args) == 3:
-                # Get rc to check if it's a linked-object or alias
-                class_handle = args[2]
-                rc_id = self.app.get_record_class_id(class_handle)
+                child_obj_url = "{}/{}".format(args[0], args[1])
+                rec_class_handle = args[2]
+
+                # Get rc to check type
+                rc_id = self.app.get_record_class_id(rec_class_handle)
                 if rc_id == False:
-                    return self.app.fail("Couldn't retrieve class {}".format(class_handle))
+                    return self.app.fail("Couldn't retrieve class {}".format(rec_class_handle))
                 rc = self.app.get_record_class(rc_id)
 
                 # alias
                 if rc.type == "alias":
                     self.command.record_type = "alias"
                     self.command.record_definition.class_handle = args[2]
-                    self.command.record_definition.alias_dst_url = "class/"+args[0]+"/"+args[1] 
+                    self.command.record_definition.alias_dst_url = "class/"+args[0]+"/"+args[1]
 
-                # linked-object
                 elif rc.type == "linked-object":
                     self.command.record_type = "linked-object"
                     self.command.record_definition.class_handle = args[2]
-                    self.command.record_definition.target_url = "class/"+args[0]+"/"+args[1]                                                        
+                    self.command.record_definition.target_url = child_obj_url
+                                                       
 
         elif self.command.action == "new_class":
             self.command.record_class_definition.handle = line.strip()

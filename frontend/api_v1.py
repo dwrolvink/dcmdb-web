@@ -13,8 +13,7 @@ def get_record_class(rc_handle):
     return index.backend.get_record_class(rc_id)
 
 def get_record(rc_handle, record_handle):
-    rc_id = index.backend.get_record_class_id(rc_handle)
-    rec_id = index.backend.get_record_id(rc_id, record_handle)
+    rec_id = index.backend.get_record_id(rc_handle, record_handle)
     return index.backend.get_record(rec_id)
 
 
@@ -180,9 +179,9 @@ def create_new_record(class_handle):
 @api.route('/ui/api/v1/class/<class_handle>/<record_handle>/', methods=['GET', 'POST'])
 def route_record_handle(class_handle, record_handle):
     # Get record id
-    rc = get_record_class(class_handle)
-    rec_id = index.backend.get_record_id(rc.id, record_handle)
+    rec_id = index.backend.get_record_id(class_handle, record_handle)
 
+    print("----- " + class_handle + " " + record_handle)
     # Call main function
     return render_record_details(rec_id)
 
@@ -338,7 +337,7 @@ def render_record_details(record_id):
         if choose_record.validate_on_submit():
             if class_obj.type == "object":
                 # Add given record as property to current record
-                index.g.record.add_property(record_id)
+                index.g.record.add_relationship(record_id)
 
             elif class_obj.type in ['linked-object']:
                 # create linked-object

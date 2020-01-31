@@ -27,6 +27,4 @@ def run(app):
             "(id integer primary key autoincrement, object_id integer, parent_id integer);")  
     
     # User-defined values
-    query5 = ("CREATE TABLE udvs " 
-            "(id integer primary key autoincrement, object_id integer, udv text);")      
-    app.db.run((query1, query2, query3, query4, query5))
+    app.db.run((query1, query2, query3, query4))

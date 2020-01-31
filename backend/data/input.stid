@@ -33,6 +33,7 @@
 
 # Employees
 + employee/p_personson
+	label: P. Personson
 	person/Persimmon_Personson
 	team/server_administrators
 	email: p.peterson@dcmdb.nl
