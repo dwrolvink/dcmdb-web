@@ -28,9 +28,13 @@ def get_record(rc_handle, record_handle):
 def url(url):
     return '/ui/' + url
 
+def api_url(url):
+    return '/api/v1/' + url
+
 def init_globals(g, title):
     g.title = title
     g.url = url
+    g.api_url = api_url
 
 
 
@@ -191,6 +195,8 @@ def create_new_record(class_handle):
 def route_record_add_property(class_handle, record_handle_or_id):
     rec_id = to_record_id(class_handle, record_handle_or_id)
 
+   
+
     # Get record 
     record = index.backend.get_record(rec_id)
     index.g.record = record
@@ -234,6 +240,7 @@ def route_record_add_property(class_handle, record_handle_or_id):
         record.add_valued_property(input_class_handle, input_value)
 
     elif input_rc.type == "object":
+        print("---" + str(input_record_id))
         record.add_property(input_record_id)
 
     elif input_rc.type == "linked-object":

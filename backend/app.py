@@ -44,12 +44,14 @@ class App():
         return self.get_object_list(query, RecordClass)      
 
     def exists_record(self, record_id):
-        query = "SELECT * FROM records WHERE id = '{}'".format(record_id)   
+        query = "SELECT * FROM records WHERE id = '{}'".format(record_id)  
         row = self.db.fetch_one(query)
+
         if row is None or row is False:
             return False      
-        elif row[0] == record_id:
+        elif str(row[0]) == str(record_id):
             return True
+
         return False
 
     def get_record(self, record_id):

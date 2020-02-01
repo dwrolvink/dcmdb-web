@@ -217,7 +217,7 @@
             class_handle = class_select.value;
             
 			// Get class object (JSON-friendly reduction)
-            fetch('/ui/api/v2/class/' + class_handle + "/?load_records=true").then(function(response) 
+            fetch('{{ g.api_url("class/") }}' + class_handle + "/?load_records=true").then(function(response) 
 			{
 				// Jsonify
                 response.json().then(function(data) 
@@ -274,7 +274,7 @@
 				show(box_alias2);
 				var alias_class_handle = alias_class_select.value
 
-				fetch('/ui/api/v2/class/' + alias_class_handle + "/?load_records=true").then(function(response) { response.json().then(function(data) 
+				fetch('{{ g.api_url("class/") }}' + alias_class_handle + "/?load_records=true").then(function(response) { response.json().then(function(data) 
 					{
 						// Compile option list for records
 						var optionHTML = '';

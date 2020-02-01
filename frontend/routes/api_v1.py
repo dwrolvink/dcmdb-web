@@ -81,9 +81,11 @@ def get_records():
 
     return jsonify({'records' : output})
 
-@apiv1.route('/api/v1/class/<class_handle>/<record_handle_or_id>', methods=['GET'])
-@apiv1.route('/api/v1/class/<class_handle>/<record_handle_or_id>/', methods=['GET'])
-def route_record_handle(class_handle, record_handle_or_id):
+ 
+
+@apiv1.route('/api/v1/record/<record_handle_or_id>', methods=['GET'])
+@apiv1.route('/api/v1/record/<record_handle_or_id>/', methods=['GET'])
+def route_record_handle(record_handle_or_id):
     if record_handle_or_id.isdigit():
         rec_id = record_handle_or_id
     else:
