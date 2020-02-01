@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<article>
+	<h1> {{ g.title }}</h1>
+
+	<table class="tablelist">
+
+		<tr>
+			<td class="bullet bigger">
+				<a href="{{ g.url('class') }}">
+						{{ g.url('class') }}
+				</a>
+			</td>
+			<td>
+				All Record Classes
+			</td>
+		</tr>
+
+		<tr>
+			<td class="bullet bigger">
+				<a href="{{ g.url('record') }}">
+						{{ g.url('record') }}
+				</a>
+			</td>
+			<td>
+				All Records
+			</td>
+		</tr>
+
+		<tr>
+			<td class="bullet bigger">
+				<a href="{{ g.url('record') }}?class=computer">
+						{{ g.url('record') }}?class=computer
+				</a>
+			</td>
+			<td>
+				All Records of Class "computer"
+			</td>
+		</tr>		
+
+	</table>
+		
+
+</article>
+
+{% endblock %}
+
+{% block inpage_menu %}
+
+<li> <a href="/">Back</a>
+
+{% endblock %}

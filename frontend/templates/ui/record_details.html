@@ -1,0 +1,299 @@
+{% extends "base.html" %}
+{% from 'common.html' import api_nav %}
+{% from 'common.html' import input as input %}
+
+{% block extra_css %}
+		<!-- login.html css -->
+		<link rel="stylesheet" href="/static/dist/css/forms.css" />
+{% endblock %}
+
+{% block content %}
+
+<article style="max-width:100vw;" class="flat-article">
+	{{ api_nav(g) }}
+</article>
+<article class="flat-article">
+
+	<h1> {{ g.record.class_name }}:  <a href="{{ g.url(g.record.url) }}">{{ g.title }}</a></h1>
+</article>
+
+<article>
+
+	<table class="tablelist">
+		{% if g.record.custom_attributes %}
+			<tr><td colspan="3"><h2>Properties</h2></td></tr>
+			
+			{% for group in g.record.custom_attributes %}
+				{% set rc = group[1][0].record_class %}
+
+				<tr>
+					<td class="bullet" valign="top" rowspan="{{ group[1]|length + 1 }}">
+						<a style="color:black;" href="{{ g.url(rc.url) }}">
+							{{ rc.name }}
+						</a>
+					</td>
+				</tr>
+
+				{% for obj in group[1] %}
+					<tr>
+						{% if obj.class_type == 'value' %}
+							<td>
+								<span style="color:gray">{{ obj.value_prefix }}</span> {{ obj.value }} <span style="color:gray">{{ obj.record_class.unit }}</span> 
+							</td>	
+						{% elif obj.class_type == 'alias' %}
+							<td colspan="2">
+								<a href="{{ g.url(obj.alias_src.url) }}">
+									{{ obj.alias_src.label }}
+								</a>
+							</td>							
+						{% else %}
+							<td colspan="2">
+								<a href="{{ g.url(obj.url) }}">
+									{{ obj.label }}
+								</a>
+							</td>
+						{% endif %}	
+					</tr>
+				{% endfor %}
+			{% endfor %}
+		{% endif %}	
+	
+
+		{% if g.record.member_list %}
+
+			<tr><td colspan="3"><h2>Members & Relationships</h2></td></tr>
+			
+			{% for group in g.record.member_list %}
+				{% set rc = group[1][0].record_class %}
+
+				<tr>
+					<td class="bullet" valign="top" rowspan="{{ group[1]|length + 1 }}">
+						{% if rc.type == 'alias' %}
+					
+								<a style="color:black;" href="{{ g.url(rc.url) }}">
+								{{ rc.name }} of
+								</a>
+						
+						{% else %}
+							<a style="color:black;" href="{{ g.url(rc.url) }}">
+								{{ rc.name }}
+							</a>		
+						{% endif %}					
+					</td>
+				</tr>
+
+				{% for obj in group[1] %}
+					<tr>
+						{% if obj.class_type == 'alias' %}
+							<td colspan="2">
+								<em>{{ obj.alias_dst.record_class.name }}</em>
+								<a href="{{ g.url(obj.alias_dst.url) }}">
+									{{ obj.alias_dst.label }} 
+								</a>
+							</td>								
+						{% else %}
+							<td colspan="2">
+								<a href="{{ g.url(obj.url) }}">
+									{{ obj.label }}
+								</a>
+							</td>
+						{% endif %}	
+					</tr>
+				{% endfor %}
+			{% endfor %}
+		{% endif %}	
+	</table>	
+
+</article>
+
+<div id="nav-inpage" class="dark">
+
+		{% if g.rc.type in  ['object','linked-object'] %}
+
+			<form method="POST" >
+				<h4> Add property</h4>
+
+				<!-- Class selection -->
+				{{ input(form.sel_class_handle,5,True) }}	
+				
+				<!-- Record selection -->
+				<div id="box_record_selection" style="display:none">
+					<div class="form-label required">
+						{{ form.sel_record_handle.label }}
+					</div>
+					{{ form.sel_record_handle(list="rs_datalist") }}	
+
+					<datalist id="rs_datalist">
+						<option value="1"><option value="2">
+					</datalist>
+				</div>
+
+				<!-- Value selection -->
+				<div id="box_value" style="display:none">
+					{{ input(form.value,5,True) }}		
+				</div>		
+
+				<!-- Alias selection -->
+				<div id="box_alias" style="display:none">
+					{{ input(form.sel_alias_class_handle,5,True) }}		
+				</div>		
+				<div id="box_alias2" style="display:none">
+					<div class="form-label required">
+						{{ form.sel_alias_record_handle.label }}
+					</div>
+					{{ form.sel_alias_record_handle(list="rs_alias_datalist") }}	
+
+					<datalist id="rs_alias_datalist">
+						<option value="1"><option value="2">
+					</datalist>	
+				</div>											
+
+				{{ form.submit }}
+				{{ form.csrf_token }}
+				<div style="clear:both"></div>
+			</form>	
+
+		{% endif %}
+
+</div>
+
+ <script>
+		// Get all references
+        var class_select   = document.getElementById("sel_class_handle");
+		var record_select  = document.getElementById("sel_record_handle");
+		var record_select_datalist = document.getElementById("rs_datalist");
+
+		var alias_class_select   = document.getElementById("sel_alias_class_handle");
+		var alias_record_select  = document.getElementById("sel_alias_record_handle");		
+        var alias_record_select_datalist = document.getElementById("rs_alias_datalist");
+
+		var value_select   = document.getElementById("value");
+		var submit         = document.getElementById("submit");
+
+		var box_record_selection   = document.getElementById("box_record_selection");
+		var box_value              = document.getElementById("box_value");
+		var box_alias              = document.getElementById("box_alias");
+		var box_alias2             = document.getElementById("box_alias2");
+
+		// Helper functions
+		function clearall(){
+			hide(box_record_selection);
+			hide(box_value);
+			hide(box_alias);
+			hide(box_alias2);
+
+			value_select.value = "";
+			record_select.value = "";
+
+			disableSubmit();			
+
+		}
+
+		function enableSubmit(){
+			submit.disabled = false;		
+		}
+		function disableSubmit(){
+			submit.disabled = true;
+		}
+
+		function show(element){ element.style.display = "block" }
+		function hide(element){ element.style.display = "none" }
+
+		// Arm
+		value_select.oninput       = function(){ (value_select.value != "" ? enableSubmit() : disableSubmit() );	}
+		record_select.oninput = enableSubmit
+		alias_record_select.oninput = enableSubmit
+
+		value_select.autocomplete = "off"
+		record_select.autocomplete = "off"
+		alias_record_select.autocomplete = "off"		
+		
+		disableSubmit();
+
+		// Process input from class_select
+        class_select.onchange = function()  
+		{
+			// get inserted class handle
+            class_handle = class_select.value;
+            
+			// Get class object (JSON-friendly reduction)
+            fetch('/ui/api/v2/class/' + class_handle + "/?load_records=true").then(function(response) 
+			{
+				// Jsonify
+                response.json().then(function(data) 
+				{
+					// Hide all option boxes / empty textbox input values
+					clearall();
+					
+					if (data.class.type == 'object') 
+					{
+						show(box_record_selection);
+
+						// Compile option list for records
+						var optionHTML = '';
+						for (var record of data.class.records) {
+							optionHTML += '<option value="' + record.label + '; ' + record.id + '">';
+						}
+						record_select_datalist.innerHTML = optionHTML;
+						
+					}
+					else if (data.class.type == 'value') 
+					{
+						// Show value box
+						show(box_value);
+						document.getElementById("value").placeholder = data.class.unit;
+					}
+					else if (data.class.type == 'linked-object') 
+					{
+						enableSubmit();
+					}
+					else if (data.class.type == 'alias') 
+					{
+						show(box_alias);
+
+						// Compile option list for  alias class selection
+						var optionHTML = '<option selected="selected" value="0"></option>';
+						for (var rc of data.class.accepts) {
+							optionHTML += '<option value="' + rc[0] + '">' + rc[1] + '</option>';
+						}
+						alias_class_select.innerHTML = optionHTML;
+					}					
+                })
+            });
+        }
+
+		// ALIAS: load records list
+		alias_class_select.onchange = function()
+		{ 
+			if (alias_class_select.value == 0)
+			{
+				hide(box_alias2);
+			}
+			else 
+			{
+				show(box_alias2);
+				var alias_class_handle = alias_class_select.value
+
+				fetch('/ui/api/v2/class/' + alias_class_handle + "/?load_records=true").then(function(response) { response.json().then(function(data) 
+					{
+						// Compile option list for records
+						var optionHTML = '';
+						for (var record of data.class.records) {
+							optionHTML += '<option value="' + record.label + '; ' + record.id + '">';
+						}
+						alias_record_select_datalist.innerHTML = optionHTML;
+					});
+				});
+			}
+
+		}
+
+    </script>
+
+{% endblock %}
+
+{% block inpage_menu %}
+
+<li> <a href="{{ g.back_link }}">Back</a>
+
+{% endblock %}
