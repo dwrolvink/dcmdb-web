@@ -79,8 +79,6 @@ class Command():
             record.add_valued_property(class_handle, value)
 
 
-
-
 class Processor():
     def __init__(self, app):
         self.app = app

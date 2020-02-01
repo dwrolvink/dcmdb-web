@@ -39,12 +39,17 @@ def create_app():
 	# application.
 	#
 	# Register main, this is the blueprint that handles the homepage
-	from .main import main as main_blueprint
+	from .routes.main import main as main_blueprint
 	app.register_blueprint(main_blueprint)
 
-	# Register api_v1, this is the blueprint that handles the /api/v1/ routes
-	from .api_v1 import api as api_v1_blueprint
-	app.register_blueprint(api_v1_blueprint)    
+    # Register api_v1, this is the blueprint that handles the /api/v1/ routes
+	from .routes.api_v1 import apiv1 as api_v1_blueprint
+	app.register_blueprint(api_v1_blueprint)      
+
+    # Register ui, this blueprint handles navigating/editing the cmdb 
+    # through the browser
+	from .routes.ui import ui as ui_blueprint
+	app.register_blueprint(ui_blueprint)           
 
 	# -- Return app to Flask to start serving files
 	return app

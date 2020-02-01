@@ -1,4 +1,5 @@
 from pprint import pprint
+from collections import OrderedDict
 import inspect
 
 class AttributeDataClass():
@@ -11,6 +12,7 @@ class AttributeDataClass():
             setattr(self, name, [value])
         else:
             setattr(self, name, getattr(self, name) + [value])
+
             
 class Record():
     def __init__(self, app, record_id):
@@ -60,8 +62,25 @@ class Record():
         self.url = self.set_url()
 
 
+    def definition(self):
+
+        """ Create a simple object that can be parsed by JSON """
+
+        # Output
+        defObj = OrderedDict()
+
+        # Simple values
+        defObj['id'] = self.id
+        defObj['label'] = self.label 
+        if self.handle:
+            defObj['handle'] = self.handle
+        if self.target:
+            defObj['target'] = (self.target.id, self.target.label)
+
+        return defObj
+
     @property
-    def target(self):
+    def target(self): 
         if self.target_obj:
             return self.target_obj
 
@@ -87,6 +106,8 @@ class Record():
     def get_members(self):
         query = "SELECT object_id FROM relationships WHERE parent_id = {}".format(self.id)   
         return self.app.get_object_list(query, Record) 
+
+
 
     @property
     def list(self):
@@ -211,10 +232,6 @@ class Record():
         return self.member_table_save
 
 
-
-
-    
-
     def set_url(self):
         rc = self.record_class
         url = ""
@@ -280,9 +297,18 @@ class Record():
         query = "INSERT INTO relationships (object_id, parent_id) "
         query += "VALUES('%s', '%s')" % (self.id, record_id)
 
+        # Set target value of added object if applicable
+        rec = self.app.get_record(record_id)
+        if rec.record_class.type == "value":
+            rec.set_target(self.id)
+
         # Return true (=success) if query succeeded
         return self.app.db.run(query)   
         
+    def set_target(self, record_id):
+        query = "UPDATE records SET target_id = {} WHERE id = {};" \
+                .format(record_id, self.id)
+        return self.app.db.run(query) 
 
     def print(self):
         msg = (

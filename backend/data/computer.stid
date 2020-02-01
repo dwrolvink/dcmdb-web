@@ -1,4 +1,5 @@
 + [object] computer
+	accepts: team, employee, ram, cpu, city
 + [value] ram
 	name: RAM
 	unit: gb
@@ -6,3 +7,4 @@
 + [value] cpu
 	name: CPU
 	unit: cores
+	applies_to: computer	

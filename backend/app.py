@@ -43,14 +43,32 @@ class App():
         query = "SELECT * FROM classes"
         return self.get_object_list(query, RecordClass)      
 
-
-    def get_record(self, record_id):
+    def exists_record(self, record_id):
         query = "SELECT * FROM records WHERE id = {}".format(record_id)   
         row = self.db.fetch_one(query)
-
         if row is None or row is False:
-            return False        
-        return Record(self, record_id)    
+            return False      
+        elif row[0] == record_id:
+            return True
+        return False
+
+    def get_record(self, record_id):
+        if self.exists_record(record_id):
+            return Record(self, record_id)    
+        return False
+
+    def get_all_records(self):
+        query = "SELECT * FROM records"  
+        rows = self.db.fetch_all(query)
+
+        if rows is None or rows is False:
+            return False      
+
+        output = []
+        for row in rows:
+            output.append(Record(self, row[0]))
+
+        return output        
 
     def get_records(self, class_handle):
         rc = self.get(class_handle)

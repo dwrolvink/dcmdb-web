@@ -60,6 +60,9 @@ class AddPropertyForm_choose_value(FlaskForm):
 
 class TestForm(FlaskForm):
     sel_class_handle  = SelectField('Class', validators=[Optional()]) 
-    sel_record_handle = SelectField('Record', validators=[Optional()]) 
+    sel_record_handle = StringField('Record', validators=[Optional()])
+    sel_alias_class_handle  = SelectField('Class', validators=[Optional()]) 
+    sel_alias_record_handle = StringField('Record', validators=[Optional()])  
     value         = StringField('Value', validators=[Optional()])
     label         = StringField('Label', validators=[Optional()])
+    submit        = SubmitField('Submit')    

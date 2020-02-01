@@ -1,4 +1,4 @@
-+ [value] email
+# Objects --------------------------------------------------------------
 
 + [object] company
 
@@ -10,15 +10,12 @@
 	name: Employee
 	accepts: team, email, tel, person, city
 	
-
 + [object] s_code
 	name: Application Code
 	description: Code as defined for the project/product in COMAR
 + s_code/A00001	
 + s_code/A00002
 + s_code/A00003
-
-
 
 + [object] dtap
 	name: Development Phase	
@@ -31,14 +28,14 @@
 + dtap/production
 	label: Production	
 
-# Values --------------------------------------------------------------
+# Values ---------------------------------------------------------------
 + [value] tel
 	name: Telephone Number
-	applies_to: employee, department
 
 + [value] private_tel
 	name: Private Phone Number
-	applies_to: person
+
++ [value] email	
 
 # Aliases --------------------------------------------------------------
 + [alias] po
@@ -47,7 +44,7 @@
 
 + [alias] owner
 	name: Owner
-	accepts: role, employee, team, po
+	accepts: employee, team, po
 
 + [alias] dep_location
 	name: Department Location

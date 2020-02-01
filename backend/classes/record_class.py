@@ -26,6 +26,30 @@ class RecordClass():
         # Set url
         self.url = 'class/' + self.handle
 
+    def definition(self, load_records=False):
+        rcObj = {}
+        rcObj['id']     = self.id
+        rcObj['handle'] = self.handle
+        rcObj['name']   = self.name
+        rcObj['type']   = self.type
+        rcObj['unit']   = self.unit
+
+        if load_records:
+            rcObj['records'] = [r.definition() for r in self.records()]
+
+        # List all classes that records of this class accepts as properties
+        accept_list = self.accepts_objects()
+        if accept_list:
+            rcObj['accepts'] = [(rc.id, rc.name) for rc in accept_list]       
+
+        return rcObj 
+
+    def accepts_objects(self):
+        rc_list = []
+        for rch in self.accepts:
+            rc_list.append(self.app.get(rch))
+        return rc_list
+
     def records(self):
         query = "SELECT * FROM records WHERE class_id = {};" \
                 .format(self.id)

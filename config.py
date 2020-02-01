@@ -6,6 +6,7 @@ class Config(object):
     DEBUG = False
     TESTING = False
     SECRET_KEY = '<fill in secret key>'
+    JSON_SORT_KEYS = False
     
 
 class ProductionConfig(Config):

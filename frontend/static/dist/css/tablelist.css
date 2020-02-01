@@ -9,6 +9,7 @@
 
 .tablelist td {
 	vertical-align: top;
+	padding:0.5rem;
 }
 
 .tablelist form {
@@ -44,6 +45,9 @@
 	vertical-align: middle;
 }
 
+.bigger {
+	max-width:100vw;
+}
 
 .tablelist tr:last-child {
 	border-bottom: 0px;
