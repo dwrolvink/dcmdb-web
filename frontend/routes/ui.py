@@ -219,11 +219,11 @@ def route_record_add_property(class_handle, record_handle_or_id):
 
     # record id
     if form.sel_record_handle.data:
-        input_record_id = form.sel_record_handle.data.split('; ')[1]
+        input_record_id = form.sel_record_handle.data.split(';')[1].strip()
 
     # alias record id
     if form.sel_alias_record_handle.data:
-        input_alias_record_id = form.sel_alias_record_handle.data.split('; ')[1]
+        input_alias_record_id = form.sel_alias_record_handle.data.split(';')[1].strip()
 
     # value
     input_value = form.value.data

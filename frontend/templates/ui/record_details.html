@@ -174,6 +174,10 @@
 		var box_alias              = document.getElementById("box_alias");
 		var box_alias2             = document.getElementById("box_alias2");
 
+		// globals
+		let valid_records = [];
+		let valid_alias_records = [];
+
 		// Helper functions
 		function clearall(){
 			hide(box_record_selection);
@@ -199,9 +203,9 @@
 		function hide(element){ element.style.display = "none" }
 
 		// Arm
-		value_select.oninput       = function(){ (value_select.value != "" ? enableSubmit() : disableSubmit() );	}
-		record_select.oninput = enableSubmit
-		alias_record_select.oninput = enableSubmit
+		value_select.oninput  = function(){ (value_select.value != "" ? enableSubmit() : disableSubmit() );	}
+		record_select.oninput = check_record
+		alias_record_select.oninput = check_record_alias
 
 		value_select.autocomplete = "off"
 		record_select.autocomplete = "off"
@@ -214,6 +218,9 @@
 		{
 			// get inserted class handle
             class_handle = class_select.value;
+
+			// Hide all option boxes / empty textbox input values
+			clearall();			
             
 			// Get class object (JSON-friendly reduction)
             fetch('{{ g.api_url("class/") }}' + class_handle + "/?load_records=true").then(function(response) 
@@ -221,9 +228,9 @@
 				// Jsonify
                 response.json().then(function(data) 
 				{
-					// Hide all option boxes / empty textbox input values
-					clearall();
-					
+					// Save records
+					valid_records = data.class.records;
+
 					if (data.class.type == 'object') 
 					{
 						show(box_record_selection);
@@ -234,7 +241,6 @@
 							optionHTML += '<option value="' + record.label + '; ' + record.id + '">';
 						}
 						record_select_datalist.innerHTML = optionHTML;
-						
 					}
 					else if (data.class.type == 'value') 
 					{
@@ -275,6 +281,9 @@
 
 				fetch('{{ g.api_url("class/") }}' + alias_class_handle + "/?load_records=true").then(function(response) { response.json().then(function(data) 
 					{
+						// Save records
+						valid_alias_records = data.class.records;	
+
 						// Compile option list for records
 						var optionHTML = '';
 						for (var record of data.class.records) {
@@ -287,6 +296,41 @@
 
 		}
 
+		// Check user input
+		function check_record(){
+			check_input_record_select(valid_records, record_select);
+		}
+		function check_record_alias(){
+			check_input_record_select(valid_alias_records, alias_record_select);
+		}		
+		function check_input_record_select(record_list, input)
+		{
+			let input_value = input.value;
+
+			// Get id
+			if (input_value.split(";").length != 2)
+			{
+				disableSubmit();
+				return;
+			}
+			let record_id = input_value.split(";")[1].trim();
+			
+			// check if input is in list of records that we got back
+			let input_is_valid = false;
+			record_list.forEach(function(item){
+				if (item.id == record_id){ 
+					input_is_valid = true; 
+				}
+			});
+
+			// execute
+			if (input_is_valid){
+				enableSubmit();
+			}
+			else {
+				disableSubmit();
+			}
+		}
     </script>
 
 {% endblock %}
