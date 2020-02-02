@@ -39,6 +39,7 @@ class Record():
         self.class_name = self.record_class.name
         self.class_type = self.record_class.type
         self.class_handle = self.record_class.handle
+        self.unit = self.record_class.unit
 
         # Properties
         self.property_table = False
@@ -62,22 +63,75 @@ class Record():
         self.url = self.set_url()
 
 
+
+
+    """
+            API REPRESENTATION
+    """
+
+
     def definition(self):
 
         """ Create a simple object that can be parsed by JSON """
 
+        rc = self.record_class
+
         # Output
         defObj = OrderedDict()
 
-        # Simple values
+        # Set values
         defObj['id'] = self.id
         defObj['label'] = self.label 
+        defObj['url'] = self.url
         if self.handle:
             defObj['handle'] = self.handle
+
+        defObj['value'] = self.value
+
         if self.target:
             defObj['target'] = (self.target.id, self.target.label)
 
+        defObj['class'] = rc.signature()
+
+        defObj['properties'] = {}
+        for property in self.list:
+
+            value_list = property[1]
+            property_name = property[0]
+
+            if type(value_list[0]) == Record:
+                defObj['properties'][property_name] = []
+
+                for r in value_list:
+                    if r.value != "":
+                        defObj['properties'][property_name].append({'value':r.value, 'unit':r.unit})
+                    else:
+                        defObj['properties'][property_name].append(r.signature())
+                    
+
+        defObj['parents'] = [r.signature() for r in self.properties()]
+        defObj['members']    = [r.signature() for r in self.members()]
+
+        
+            
         return defObj
+
+    def signature(self):
+        """ this is how this record is represented in the definitions of 
+            other records """
+        return {
+                    'id':self.id, 
+                    'url':self.url, 
+                    'label':self.label, 
+                    'value':self.value
+                }
+
+
+
+
+    """
+            GETTTERS / SETTERS
+    """
 
     @property
     def target(self): 
@@ -98,12 +152,14 @@ class Record():
         self.get_property_table()
         return self.property_table
 
+    
+
     def properties(self):
         # Get all records
         query = "SELECT parent_id FROM relationships WHERE object_id = {}".format(self.id) 
         return self.app.get_object_list(query, Record)   
 
-    def get_members(self):
+    def members(self):
         query = "SELECT object_id FROM relationships WHERE parent_id = {}".format(self.id)   
         return self.app.get_object_list(query, Record) 
 

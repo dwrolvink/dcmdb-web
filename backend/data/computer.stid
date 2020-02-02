@@ -1,5 +1,5 @@
 + [object] computer
-	accepts: team, employee, ram, cpu, city
+	accepts: team, employee, ram, cpu, city, s_code
 + [value] ram
 	name: RAM
 	unit: gb

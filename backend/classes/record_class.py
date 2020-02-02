@@ -44,6 +44,14 @@ class RecordClass():
 
         return rcObj 
 
+    def signature(self):
+        return  {
+                    'id' : self.id,
+                    'url': self.handle,
+                    'name': self.name,
+                    'type': self.type
+                }
+
     def accepts_objects(self):
         rc_list = []
         for rch in self.accepts:

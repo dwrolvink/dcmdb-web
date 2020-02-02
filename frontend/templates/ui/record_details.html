@@ -9,9 +9,8 @@
 
 {% block content %}
 
-<article style="max-width:100vw;" class="flat-article">
-	{{ api_nav(g) }}
-</article>
+{{ api_nav(g) }}
+
 <article class="flat-article">
 
 	<h1> {{ g.record.class_name }}:  <a href="{{ g.url(g.record.url) }}">{{ g.title }}</a></h1>
@@ -292,8 +291,3 @@
 
 {% endblock %}
 
-{% block inpage_menu %}
-
-<li> <a href="{{ g.back_link }}">Back</a>
-
-{% endblock %}

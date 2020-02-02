@@ -36,9 +36,11 @@
 {%- endmacro %}
 
 {%- macro api_nav(g) -%}
+<article style="max-width:100vw;" class="flat-article">
 	<div id="nav-body">
 		<table><tr><td width="100px">{{ back_link() }}</td>
 		<td><a href="{{ g.parent_page }}">{{ g.parent_page_link_name }}</a></td>
 		</tr></table>
 	</div>
+</article>
 {%- endmacro %}

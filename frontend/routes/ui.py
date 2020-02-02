@@ -195,8 +195,6 @@ def create_new_record(class_handle):
 def route_record_add_property(class_handle, record_handle_or_id):
     rec_id = to_record_id(class_handle, record_handle_or_id)
 
-   
-
     # Get record 
     record = index.backend.get_record(rec_id)
     index.g.record = record

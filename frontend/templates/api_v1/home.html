@@ -1,12 +1,11 @@
 {% extends "base.html" %}
-
 {% block content %}
 
 <article>
 	<h1> {{ g.title }}</h1>
 
 	<table class="tablelist">
-
+		<tr><td colspan="2"><h2>GET</h2></td></tr>
 		<tr>
 			<td class="bullet bigger">
 				<a href="{{ g.url('class') }}">
@@ -31,15 +30,43 @@
 
 		<tr>
 			<td class="bullet bigger">
-				<a href="{{ g.url('record') }}?class=computer">
-						{{ g.url('record') }}?class=computer
+				<a href="{{ g.url('record') }}/25">
+						{{ g.url('record') }}/25
 				</a>
 			</td>
 			<td>
-				All Records of Class "computer"
+				Get specific Record by ID
 			</td>
-		</tr>		
+		</tr>
 
+		<tr>
+			<td class="bullet bigger">
+				<a href="{{ g.url('record') }}/?class=computer">
+						{{ g.url('record') }}/?class=computer
+				</a><br/>
+				<a href="{{ g.url('record') }}/?class=1">
+						{{ g.url('record') }}/?class=1
+				</a>				
+			</td>
+			<td>
+				All Records of Class "computer" <br/>ID is also allowed, i.e.: ?class=1
+			</td>
+		</tr>	
+		<tr><td colspan="2"><h2>POST</h2></td></tr>
+		<tr>
+			<td colspan="2" class="bullet bigger">
+				<a href="{{ g.url('docs/post/record/') }}">
+						CRUD Records
+				</a>
+			</td>
+		</tr>	
+		<tr>
+			<td colspan="2" class="bullet bigger">
+				<a href="{{ g.url('docs/post/class/') }}">
+						CRUD Record Classes
+				</a>
+			</td>
+		</tr>						
 	</table>
 		
 

@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+{% from 'common.html' import api_nav %}
+
+{% block content %}
+
+{{ api_nav(g) }}
+
+<article class="docs">
+	<h1> {{ g.title }}</h1>
+
+		
+<h2>POST</h2>
+<div id="examples"></div>
+
+
+</article>
+
+<script>
+	// Simple object to define examples with
+	class Example {
+		constructor() {
+			this.url = "";
+			this.text = [];
+			this.body = "";
+			this.method = "POST";
+			this.height = "120px";
+		}
+	};
+
+	// Save all examples to this array
+	let example_list = [];
+
+
+
+	// Simple create
+	let ex = new Example();
+	ex.text.push('The following is an example of how to create a record of type "object":');
+	ex.url = '{{ g.host }}api/v1/record/';
+	ex.body = `
+{
+	'class_handle': 'computer',
+	'handle': 'srv003',
+	'label': '',
+}`;
+	example_list.push(ex);
+
+	// Useage of id 
+	ex = new Example();
+	ex.text.push('You can use class_id instead of class_handle:');
+	ex.url = '{{ g.host }}api/v1/record/';
+	ex.body = `
+{
+	'class_id': 1,
+	'handle': 'j.doe',
+	'label': 'John Doe',
+}`;
+	example_list.push(ex);
+
+	// Delete
+	ex = new Example();
+	ex.text.push(`To delete, just post with state=absent, and the id:`);
+	ex.url = '{{ g.host }}api/v1/record/';
+	ex.body = `{
+	'state': 'absent',
+	'id': '25'
+}`;
+	example_list.push(ex);	
+
+	// Update
+	ex = new Example();
+	ex.text.push(`The same counts for update. Make sure the id is given, and then you can change all other values
+				except those that come from the class (you can't change the class). Most of these variables are prefixed with 'class_'.`);
+	ex.text.push(`The following example shows changing the handle from srv-001 to webserver012. 
+				Note that the label (how the record is displayed in the Navigator) will not change through this operation.`);				
+	ex.url = '{{ g.host }}api/v1/record/';
+	ex.body = `{
+	'id': '25',
+	'handle': 'webserver012'
+}`;
+	example_list.push(ex);	
+
+
+
+	// Write to examples
+	let box = document.getElementById("examples");
+	box.innerHTML = "";
+	example_list.forEach(function (item, index)
+	{ 
+		// determine height of codeblock
+		let n = item.body.split("\n").length;
+		item.height = `calc(${n*1}rem + 1rem)`
+
+		// Write
+		item.text.forEach(function (p) 
+		{
+			box.innerHTML += `<p> ${p} </p>\n`;
+		});
+		box.innerHTML += `
+			<form>
+				<input type="text" class="darkcode" value="${item.url}" />
+<textarea style="height:${item.height};">
+${item.body}
+</textarea>
+				<input type="submit" />
+			</form>`;		
+	});	
+
+
+
+
+
+</script>
+
+{% endblock %}
+
+
+
+
+

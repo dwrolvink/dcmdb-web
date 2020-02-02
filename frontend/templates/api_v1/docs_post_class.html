@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% from 'common.html' import api_nav %}
+
+{% block content %}
+
+{{ api_nav(g) }}
+
+<article>
+	<h1> {{ g.title }}</h1>
+
+		
+<h2>POST</h2>
+<hr />
+
+
+</article>
+
+{% endblock %}
+
+{% block inpage_menu %}
+
+<li> <a href="/">Back</a>
+
+{% endblock %}
