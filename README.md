@@ -35,8 +35,8 @@ git clone https://github.com/dwrolvink/dcmdb-web.git
 cd dcmdb-web
 pipenv install
 
-# Reset the database (optional, when running the first time)
-python reset_database.py
+# Reset the database (when running the first time)
+pipenv run python reset_database.py
 
 # Copy config.py to config_local.py and edit the values
 cp config.py config_local.py
