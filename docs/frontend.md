@@ -62,9 +62,7 @@ python serve.py # production
 ```
 
 ## Production setup
-First, install uwsgi and  uwsgi-plugin-python.
-
-If you didn't do it yet in the previous steps, install pipenv:
+If you didn't do it yet in the previous steps, install pipenv, then run the following:
 
 ```bash
 cd <myProject>
@@ -72,12 +70,15 @@ pipenv install
 ```
 
 Then, open dcmdb-web/serve.py, and change the value for venv_location.
-Instructions on how to get that value can be found as comments above this
+Instructions on how to get that value can be found as comments above that
 value.
 
 ```bash
 cd <myProject>
 pipenv run python serve.py
 ```
-
 See serve.py for more information about the production setup
+
+On linux, you can also run `./serve`, this will run the above for you in detached mode, and afterwards it will set the group to the newly created socket to www-data, so that nginx can access it.
+
+Once you have uwsgi running, it's best to put a webserver in front of it, like nginx. Look online on how to achieve this. This is a good tutorial: [How To Serve Flask Applications with uWSGI and Nginx on Ubuntu 14.04](https://www.digitalocean.com/community/tutorials/how-to-serve-flask-applications-with-uwsgi-and-nginx-on-ubuntu-14-04). 
