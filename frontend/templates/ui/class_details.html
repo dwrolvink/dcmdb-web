@@ -69,7 +69,7 @@
 		{% endfor %}
 		{% else %}
 		{% for obj in g.records %}
-			{% set child = obj.get_members()[0] %}
+			{% set child = obj.members()[0] %}
 			<tr>
 				<td class="bullet">
 					<a href="{{ g.url(child.url) }}"> {{ child.label }} </a>
