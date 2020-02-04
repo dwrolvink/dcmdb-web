@@ -39,7 +39,7 @@
 			{% for obj in g.accepts %}
 				<tr>
 					<td class="bullet">
-						{{ obj.handle}}/{{obj.name}}
+						{{ obj.handle}}
 					</td>
 					<td>
 						<a href="{{ g.url(obj.url) }}"> {{ obj.name }} </a>
@@ -61,15 +61,14 @@
 						{% if obj.record_class.type == 'linked-object' %}
 							for <a href="{{ g.url(obj.target.url) }}">{{ obj.target.label }}</a>
 						{% endif %}
-					
-					
 				</td>
 				<td></td>
 			</tr>
 		{% endfor %}
-		{% else %}
+		{% elif g.rc.type == 'value'  %}
 		{% for obj in g.records %}
 			{% set child = obj.members()[0] %}
+
 			<tr>
 				<td class="bullet">
 					<a href="{{ g.url(child.url) }}"> {{ child.label }} </a>
@@ -79,7 +78,19 @@
 				</td>
 			</tr>
 		{% endfor %}		
-		{% endif %}
+		{% elif g.rc.type == 'alias'  %}
+		{% for obj in g.records %}
+			<tr>
+				<td class="bullet bigger" colspan="2">
+					<div class="flex-li">
+						<div class="item">{{ obj.alias_src.record_class.name }} <a href="{{ g.url(obj.alias_src.url) }}"> {{ obj.alias_src.label }} </a></div>
+						<div class="item arrow">→</div>
+						<div class="item">{{ obj.alias_dst.record_class.name }} <a href="{{ g.url(obj.alias_dst.url) }}"> {{ obj.alias_dst.label }} </a></div>
+					 </div>
+				</td>
+			</tr>
+		{% endfor %}		
+		{% endif %}		
 		
 
 	</table>

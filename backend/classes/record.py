@@ -274,7 +274,7 @@ class Record():
             return self.member_table_save
 
         pd = AttributeDataClass()
-        members = self.get_members()
+        members = self.members()
        
         # Listed custom attributes
         for p in members:

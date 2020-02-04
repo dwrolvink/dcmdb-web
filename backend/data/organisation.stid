@@ -40,7 +40,7 @@
 # Aliases --------------------------------------------------------------
 + [alias] po
 	name: Product Owner
-	accepts: employee	
+	accepts: employee
 
 + [alias] owner
 	name: Owner

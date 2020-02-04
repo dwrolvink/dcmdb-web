@@ -36,3 +36,16 @@ input[type=submit] {
 select {
 	margin-bottom:1rem;
 }
+
+select,
+input {
+	background-color: white;
+	border: 1px solid gray;
+	-webkit-appearance: none;
+	padding: 3px 10px 3px 10px;
+	min-width:200px;
+}
+input[type=submit] {
+	
+	font-weight: bold;
+}

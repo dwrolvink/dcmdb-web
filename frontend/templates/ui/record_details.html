@@ -238,7 +238,7 @@
 						// Compile option list for records
 						var optionHTML = '';
 						for (var record of data.class.records) {
-							optionHTML += '<option value="' + record.label + '; ' + record.id + '">';
+							optionHTML += '<option value="' + record.label + '; ' + record.id + '">'+ record.label + '; ' + record.id+'</option>';
 						}
 						record_select_datalist.innerHTML = optionHTML;
 					}
@@ -287,7 +287,7 @@
 						// Compile option list for records
 						var optionHTML = '';
 						for (var record of data.class.records) {
-							optionHTML += '<option value="' + record.label + '; ' + record.id + '">';
+							optionHTML += '<option value="' + record.label + '; ' + record.id + '">'+ record.label + '; ' + record.id+'</option>';
 						}
 						alias_record_select_datalist.innerHTML = optionHTML;
 					});

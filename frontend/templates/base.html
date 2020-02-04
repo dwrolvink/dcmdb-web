@@ -12,10 +12,11 @@
 		{% if g.title %}<title> {{ g.title }} </title>{% else %}<title> Flask Base Project </title>	{% endif %}
 
 		<!-- includes -->
+		<link rel="stylesheet" href="/static/dist/css/form.css" />
 		<link rel="stylesheet" href="/static/dist/css/main.css" />
 		<link rel="stylesheet" href="/static/dist/css/tablelist.css" />
 		<link rel="stylesheet" href="/static/dist/css/nav.css" />
-		<link rel="stylesheet" href="/static/dist/css/form.css" />
+
 		<link rel="stylesheet" href="/static/dist/css/adaptive.css" />
 		<script src="/static/dist/js/main.js"></script> 
 
@@ -26,6 +27,7 @@
 	</head>
 
 	<body>
+
 		<header>
 			<a href="/"><img src="/static/dist/img/logo.png" alt="dcmdb" /></a>
 			<nav id="nav-mobile">
@@ -34,6 +36,7 @@
 						☰ Menu
 				</button><br/>
 				<div style="clear:both"></div>
+				
 			</nav>			
 			<nav id="nav-web">
 				<ul>
@@ -42,12 +45,26 @@
 					<li><a href="/ui/class/">Navigator</a>
 					<li><a href="/login">Login</a>
 				</ul>
-				<div style="clear:both"></div>
+				<div style="clear:both"></div>			
 			</nav>
+				{% if session['logged_in'] %}
+					<div class="login-message">
+						Logged in as {{ session['username'] }}. <a href="/logout">Logout</a>.
+					</div>
+				{% endif %}				
 		</header>
 		<div style="clear:both"></div>
 		<div id="feature-image" class="midpage" style="background-image:url(/static/dist/img/drops.jpg)"></div>
 
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 	
 
 		{% block content %}{%endblock %}

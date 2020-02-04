@@ -5,7 +5,7 @@ from backend.app import App as Backend
 import backend.scripts.reset_database 
 
 # Flask general
-from flask import Blueprint, render_template, g, current_app
+from flask import Blueprint, render_template, g, current_app, session
 
 # Frontend __init__ integration
 from . import title
@@ -25,5 +25,8 @@ class Integrator():
 
         self.scripts = {}
         self.scripts["reset_database"] = backend.scripts.reset_database
+
+    def authenticated(self):
+        return session['logged_in']
 
 

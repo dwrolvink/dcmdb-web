@@ -29,8 +29,8 @@
 }
 .bullet {
 	border-left: 2px solid #afb5ff;
-	max-width:200px;
-	min-width: 9rem;
+	max-width:220px;
+	min-width: 12rem;
 }
 .bullet::before {
 	content: '';

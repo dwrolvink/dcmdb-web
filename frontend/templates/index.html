@@ -8,12 +8,19 @@
 	<p>
 		<a href="/ui/class/">Go to Navigator</a>
 	</p>
-	<form id="reset_db_form" action="/reset_database" method="GET">
-		<input class="red-button" id="reset_db" style="margin-top:50px" type="submit" value="Reset Database" />
-	</form>
-	<form action="/show_input" method="GET" style="margin-top:-1rem">
-		<input class="red-button" style="background-color:blue"  type="submit" value="View Input Definition" />
-	</form>	
+
+	{% if session['logged_in'] %}
+		<form id="reset_db_form" action="/reset_database" method="GET">
+			<input class="red-button" id="reset_db" style="margin-top:50px" type="submit" value="Reset Database" />
+		</form>
+		<form action="/show_input" method="GET" style="margin-top:-1rem">
+			<input class="red-button" style="background-color:blue"  type="submit" value="View Input Definition" />
+		</form>	
+	{% else %}
+		<p>
+			<a href="/login">Login</a> to edit content.
+		</p>
+	{% endif %}
 </article>
 
 <script>
