@@ -27,6 +27,10 @@ class Integrator():
         self.scripts["reset_database"] = backend.scripts.reset_database
 
     def authenticated(self):
-        return session['logged_in']
+        if 'logged_in' not in session:
+            return False
+        if session['logged_in'] == "":
+            return False
+        return True
 
 
