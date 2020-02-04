@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pkill uwsgi
+
 rm nohup.out
 
 # Run this script as user to start serving this site over uwsgi.
